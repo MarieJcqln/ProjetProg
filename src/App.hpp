@@ -22,6 +22,13 @@ public:
     struct WeightedGraphEdge {
         int to {};
         float weight {1.0f};
+        int x{};
+        int y{};
+        //Couleur
+        int r{255};
+        int g{255};
+        int b{255};
+
 
         // default ici permet de définit les opérateurs de comparaison membres à membres automatiquement
         // Cela ne fonction qu'en C++20, si vous n'avez pas accès à cette version je vous donne les implémentations des opérateurs plus bas
@@ -49,11 +56,12 @@ public:
 
     WeightedGraph build_from_adjacency_matrix(std::vector<std::vector<float>> const& adjacency_matrix);
     
+    WeightedGraph read_map(std::string lien);
     }; 
 
-    struct Map {
-        WeightedGraph read_map(std::string lien);
-    };
+    
+
+    
 
 private:
     void render();

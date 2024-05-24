@@ -159,19 +159,41 @@ App::WeightedGraph App::WeightedGraph::build_from_adjacency_matrix(std::vector<s
 }
 
 
-App::WeightedGraph read_map(std::string lien){
+App::WeightedGraph App::WeightedGraph::read_map(std::string lien){
     App::WeightedGraph arbre{};
     std::ifstream file(lien);
     std::string line; 
     while (std::getline(file, line))
     {
-        // Process str
         //lecture itd
         if (line[0]=='n'){
             int from = line[5];
             int to = line[11];
             float distance {};
-            arbre.add_undirected_edge(from,to,distance);
+            int x{line[7]};
+            int y{line[9]};
+            //Couleur
+            int r{};
+            int g{};
+            int b{};
+            if (line[5]=='O'){
+                r=0;
+                g=0;
+                b=255;
+            }
+            else if (line[11]==' '){
+                r=255;
+                g=0;
+                b=0;
+            }
+            //arbre.add_undirected_edge(from,to,distance);
+
+            auto A = App::WeightedGraph::adjacency_list.find(from);
+            auto B = App::WeightedGraph::adjacency_list.find(to);
+            if ( A == App::WeightedGraph::adjacency_list.end()) { App::WeightedGraph::add_vertex(from);}
+            if ( B == App::WeightedGraph::adjacency_list.end()) { App::WeightedGraph::add_vertex(to);}
+            App::WeightedGraphEdge edge {to,distance,x,y,r,g,b};
+            App::WeightedGraph::adjacency_list[from].push_back(edge);
         }
         else{continue;}
     }
