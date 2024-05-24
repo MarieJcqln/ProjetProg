@@ -160,11 +160,20 @@ App::WeightedGraph App::WeightedGraph::build_from_adjacency_matrix(std::vector<s
 
 
 App::WeightedGraph read_map(std::string lien){
+    App::WeightedGraph arbre{};
     std::ifstream file(lien);
     std::string line; 
     while (std::getline(file, line))
     {
         // Process str
+        //lecture itd
+        if (line[0]=='n'){
+            int from = line[5];
+            int to = line[11];
+            float distance {};
+            arbre.add_undirected_edge(from,to,distance);
+        }
+        else{continue;}
     }
 }
 

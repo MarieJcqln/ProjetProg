@@ -117,3 +117,4 @@ add_library(simpletext INTERFACE)
 target_include_directories(simpletext SYSTEM INTERFACE ${simpletext_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE simpletext)
+
