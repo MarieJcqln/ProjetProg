@@ -13,7 +13,7 @@
 App::App() : _previousTime(0.0), _viewSize(2.0) {
    // load what needs to be loaded here (for example textures)
 
-    img::Image test {img::load(make_absolute_path("images/level.png", true), 3, true)};
+    img::Image test {img::load(make_absolute_path("images/map.png", true), 3, true)};
     //load charge à partir de en haut à gauche
     
     _texture = loadTexture(test);
@@ -36,7 +36,7 @@ void App::update() {
     const double elapsedTime { currentTime - _previousTime};
     _previousTime = currentTime;
 
-    _angle += 10.0f * elapsedTime;
+    //_angle += 10.0f * elapsedTime;
     // _angle = std::fmod(_angle, 360.0f);
     
     render();
@@ -73,7 +73,7 @@ void App::render() {
     // Using stringstream to format the string with fixed precision
     std::string angle_label_text {};
     std::stringstream stream {};
-    stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
+    //stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
     angle_label_text = stream.str();
 
     TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
