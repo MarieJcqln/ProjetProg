@@ -11,6 +11,9 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
+// regarder discord sur comment parcourir les pixels d'une image
+// c un truc avec rgb ou autre
+
 void texture()
 {
 
@@ -24,9 +27,9 @@ void texture()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, chargee_image1);
     glBindTexture(GL_TEXTURE_2D, 0);
     //////
-    for (int ligne{}; ligne < ; ligne++)
+    for (int ligne{0}; ligne < largeur; ligne++)
     {
-        for (pixel : image)
+        for (int colonne{}; colonne < largeur; colonne++)
         {
             if (pixel.color == (1, 1, 1)) //si le pixel est blanc
             {
