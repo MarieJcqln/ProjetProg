@@ -16,7 +16,8 @@
 #include <vector>
 #include <unordered_map>
 
-/* enum class TileType {
+/* Code Enguerrand 
+enum class TileType {
   Path,
   Input,
   Output,
@@ -50,12 +51,13 @@ for(unsigned int i {0}; i < tiles.size(); ++i) {
   glPopMatrix();
   // ...
 } */
+
+
 //dessiner quadrillage
 void quadrillage() {
     //boucler sur l'image
     //mettre bonne texture sur chaque quad
     glColor3f(0.0f, 0.0f, 0.0f);
-    float h{-0.5f};
     for (float h = -0.5f; h <= 0.5f; h += 0.1f) {
         for (float w = -0.5f; w <= 0.5f; w += 0.1f) {
 
