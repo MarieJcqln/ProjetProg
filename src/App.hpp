@@ -14,10 +14,10 @@ public:
     void pause_menu();
     
     // GLFW callbacks binding
-    void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
-    void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+    void key_callback(int key, int scancode, int action, int mods);
+    void mouse_button_callback(int button, int action, int mods);
     void scroll_callback(double xoffset, double yoffset);
-    void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
+    void cursor_position_callback(double xpos, double ypos);
     void size_callback(int width, int height);
 
 private:
@@ -30,6 +30,7 @@ private:
 
     // Add your variables here
     GLuint _texture {};
+    GLuint _texturecover {};
     float _angle {};
 
     SimpleText TextRenderer {};

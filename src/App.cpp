@@ -104,13 +104,13 @@ void App::render()
 }
 
 ///// CODE AJOUTE 3)2)//////
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void key_callback(int key, int scancode, int action, int mods)
 ////// FIN CODE AJOUTE 3)2///////
 //void App::key_callback(int key, int scancode, int action, int mods)
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
-    if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
-        glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne
+   /*  if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
+        glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne */
     //SI P => pause
     //SI fleche du haut : aller en haut
     //SI fleche du bas : aller en bas
@@ -124,11 +124,11 @@ void App::pause_menu()
                                       // std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
     //ADD TEXT*/
 }
-void App::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
+void App::mouse_button_callback(int button, int action, int mods)
 {
     double xpos, ypos;
     //getting cursor position
-    glfwGetCursorPos(window, &xpos, &ypos);
+    //glfwGetCursorPos(window, &xpos, &ypos);
     //cursor_position_callback
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
@@ -146,9 +146,9 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 //pour utiliser la couche alpha
 //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //glEnable(GL_BLEND);
-void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
+void App::cursor_position_callback(double xpos, double ypos)
 { //getting cursor position
-    glfwGetCursorPos(window, &xpos, &ypos);
+    //glfwGetCursorPos(window, &xpos, &ypos);
 
     // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     // {
