@@ -74,7 +74,7 @@ void App::render()
     glPopMatrix();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
-    TextRenderer.Label("JOUER", _width / 2, height / 2, SimpleText::CENTER);
+    TextRenderer.Label("JOUER", _width / 2, 20, SimpleText::CENTER);
 
     // Without set precision
     // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };

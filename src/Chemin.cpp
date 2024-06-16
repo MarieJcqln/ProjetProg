@@ -56,11 +56,9 @@ struct WeightedGraph {
 WeightedGraph build_from_adjacency_matrix(std::vector<std::vector<float>> const& adjacency_matrix);
 
 WeightedGraph read_map(std::string lien);
-};
-}
+}; };
 
-
-void App::WeightedGraph::add_vertex(int const id)
+void Chemin::WeightedGraph::add_vertex(int const id)
 {
     //find
     auto A = adjacency_list.find(id);
@@ -72,7 +70,7 @@ void App::WeightedGraph::add_vertex(int const id)
     }
 }
 
-void App::WeightedGraph::add_directed_edge(int const from, int const to, float const weight)
+void Chemin::WeightedGraph::add_directed_edge(int const from, int const to, float const weight)
 {
     //ajout arête et vertex s'il existe pas
     auto A = adjacency_list.find(from);
@@ -85,19 +83,19 @@ void App::WeightedGraph::add_directed_edge(int const from, int const to, float c
     {
         add_vertex(to);
     }
-    App::WeightedGraphEdge edge{to, weight};
+    Chemin::WeightedGraphEdge edge{to, weight};
     adjacency_list[from].push_back(edge);
 }
 
-void App::WeightedGraph::add_undirected_edge(int const from, int const to, float const weight)
+void Chemin::WeightedGraph::add_undirected_edge(int const from, int const to, float const weight)
 {
     add_directed_edge(from, to, weight);
     add_directed_edge(to, from, weight);
 }
 
-App::WeightedGraph App::WeightedGraph::build_from_adjacency_matrix(std::vector<std::vector<float>> const &adjacency_matrix)
+Chemin::WeightedGraph Chemin::WeightedGraph::build_from_adjacency_matrix(std::vector<std::vector<float>> const &adjacency_matrix)
 {
-    App::WeightedGraph graphe{};
+    Chemin::WeightedGraph graphe{};
     int i{0};
     while (i < adjacency_matrix.size())
     {
@@ -115,9 +113,9 @@ App::WeightedGraph App::WeightedGraph::build_from_adjacency_matrix(std::vector<s
     return graphe;
 }
 
-WeightedGraph WeightedGraph::read_map(std::string lien)
+Chemin::WeightedGraph Chemin::WeightedGraph::read_map(std::string lien)
 {
-    App::WeightedGraph arbre{};
+    Chemin::WeightedGraph arbre{};
     std::ifstream file(lien);
     std::string line;
     while (std::getline(file, line))
@@ -148,18 +146,18 @@ WeightedGraph WeightedGraph::read_map(std::string lien)
             }
             //arbre.add_undirected_edge(from,to,distance);
 
-            auto A = App::WeightedGraph::adjacency_list.find(from);
-            auto B = App::WeightedGraph::adjacency_list.find(to);
-            if (A == App::WeightedGraph::adjacency_list.end())
+            auto A = Chemin::WeightedGraph::adjacency_list.find(from);
+            auto B = Chemin::WeightedGraph::adjacency_list.find(to);
+            if (A == Chemin::WeightedGraph::adjacency_list.end())
             {
-                App::WeightedGraph::add_vertex(from);
+                Chemin::WeightedGraph::add_vertex(from);
             }
-            if (B == App::WeightedGraph::adjacency_list.end())
+            if (B == Chemin::WeightedGraph::adjacency_list.end())
             {
-                App::WeightedGraph::add_vertex(to);
+                Chemin::WeightedGraph::add_vertex(to);
             }
-            App::WeightedGraphEdge edge{to, distance, x, y, r, g, b};
-            App::WeightedGraph::adjacency_list[from].push_back(edge);
+            Chemin::WeightedGraphEdge edge{to, distance, x, y, r, g, b};
+            Chemin::WeightedGraph::adjacency_list[from].push_back(edge);
         }
         else
         {
