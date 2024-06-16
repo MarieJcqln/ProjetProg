@@ -17,6 +17,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // load what needs to be loaded here (for example textures)
 
     img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
+
+    test.data();
     //load charge à partir de en haut à gauche
 
     _texture = loadTexture(test);
@@ -88,9 +90,9 @@ void App::render()
 }
 
 ///// CODE AJOUTE 3)2)//////
-// void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 ////// FIN CODE AJOUTE 3)2///////
-void App::key_callback(int key, int scancode, int action, int mods)
+//void App::key_callback(int key, int scancode, int action, int mods)
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
     if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
@@ -103,17 +105,18 @@ void App::key_callback(int key, int scancode, int action, int mods)
 }
 
 void App::pause_menu()
-{
+{/* 
     glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
                                       // std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
-    //ADD TEXT
-}
-void App::mouse_button_callback(int button, int action, int mods)
+    //ADD TEXT*/
+} 
+void App::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     double xpos, ypos;
     //getting cursor position
     glfwGetCursorPos(window, &xpos, &ypos);
-    cursor_position_callback if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
+    //cursor_position_callback 
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
         pause_menu();
     }
@@ -127,12 +130,10 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 }
 
 //pour utiliser la couche alpha
-glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-glEnable(GL_BLEND);
-void App::cursor_position_callback(double xpos, double ypos)
-{
-    double xpos, ypos;
-    //getting cursor position
+//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//glEnable(GL_BLEND);
+void App::cursor_position_callback(GLFWwindow *window,double xpos, double ypos)
+{//getting cursor position
     glfwGetCursorPos(window, &xpos, &ypos);
 
     // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)

@@ -1,7 +1,8 @@
-#include <glad/glad.h>
-
 #define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
+
+#include "glad/glad.h"
+#include <OpenGL/gl.h>
 
 #include <iostream>
 
@@ -27,6 +28,7 @@ int main()
     // Initialize glfw
     if (!glfwInit())
     {
+        std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
 
@@ -64,16 +66,16 @@ int main()
     glfwSetWindowUserPointer(window, &app);
 
     glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
-                       { window_as_app(window).key_callback(key, scancode, action, mods); });
+                       { window_as_app(window).key_callback(window, key, scancode, action, mods); });
     // //// CODE AJOUTE 3)2)//// Quitter window si touche Q touché
     // glfwSetKeyCallback(window, key_callback);
     // //////////////////
     glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods)
-                               { window_as_app(window).mouse_button_callback(button, action, mods); });
+                               { window_as_app(window).mouse_button_callback(window, button, action, mods); });
     glfwSetScrollCallback(window, [](GLFWwindow *window, double xoffset, double yoffset)
                           { window_as_app(window).scroll_callback(xoffset, yoffset); });
     glfwSetCursorPosCallback(window, [](GLFWwindow *window, double xpos, double ypos)
-                             { window_as_app(window).cursor_position_callback(xpos, ypos); });
+                             { window_as_app(window).cursor_position_callback(window, xpos, ypos); });
     glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)
                               { window_as_app(window).size_callback(width, height); });
 
