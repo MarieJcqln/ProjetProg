@@ -8,6 +8,12 @@
 
 #include "App.hpp"
 
+/* Window properties */
+static const unsigned int WINDOW_WIDTH = 10;
+static const unsigned int WINDOW_HEIGHT = 10;
+static const char WINDOW_TITLE[] = "BITCHARK";
+static float aspectRatio = 1.0;
+
 namespace
 {
     App &window_as_app(GLFWwindow *window)

@@ -51,6 +51,7 @@ void App::update()
 
 void App::render()
 {
+    //CARRE ROUGE DERRIERE LA MAP QUI TOURNE
     // Clear the color and depth buffers of the frame buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -65,9 +66,10 @@ void App::render()
     glVertex2f(-0.5f, 0.5f);
     glEnd();
 
+    //MAP QUI TOURNE
     glPushMatrix();
     glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+    glRotatef(_angle, 0.0f, 0.0f, 1.0f); //SERT POUR LA ROTATION
     draw_quad_with_texture(_texture);
     glPopMatrix();
 
@@ -105,17 +107,17 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 }
 
 void App::pause_menu()
-{/* 
+{ /* 
     glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
                                       // std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
     //ADD TEXT*/
-} 
+}
 void App::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     double xpos, ypos;
     //getting cursor position
     glfwGetCursorPos(window, &xpos, &ypos);
-    //cursor_position_callback 
+    //cursor_position_callback
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
         pause_menu();
@@ -132,8 +134,8 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 //pour utiliser la couche alpha
 //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //glEnable(GL_BLEND);
-void App::cursor_position_callback(GLFWwindow *window,double xpos, double ypos)
-{//getting cursor position
+void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
+{ //getting cursor position
     glfwGetCursorPos(window, &xpos, &ypos);
 
     // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
