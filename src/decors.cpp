@@ -1,44 +1,18 @@
-#include "App.hpp"
+// #include "App.hpp"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <img/img.hpp>
+// #include <glad/glad.h>
+// #include <GLFW/glfw3.h>
+// #include <img/img.hpp>
 
-#include <sstream>
+// #include <sstream>
 
-#include "simpletext.h"
-#include "utils.hpp"
-#include "GLHelpers.hpp"
+// #include "simpletext.h"
+// #include "utils.hpp"
+// #include "GLHelpers.hpp"
 
-#include <GL/glut.h>
+// #include <GL/glut.h>
 
-GLuint texture = 0;
-///// COVER DU GAME //////
-void background()
-{
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    // texture width/height
-    const int iw = 500;
-    const int ih = 500;
-
-    glPushMatrix();
-    glLoadIdentity();
-    glTranslatef(-iw / 2, -ih / 2, 0);
-    glBegin(GL_QUADS);
-    //ON DONNE LES 4 coins de l'ecran
-    glTexCoord2f(0, 0);
-    glVertex2f(0, 0);
-    glTexCoord2f(1, 0);
-    glVertex2f(iw, 0);
-    glTexCoord2f(1, 1);
-    glVertex2i(iw, ih);
-    glTexCoord2f(0, 1);
-    glVertex2f(0, ih);
-    glEnd();
-    glPopMatrix();
-}
-//////////////////////////////
+// GLuint texture = 0;
 
 // regarder discord sur comment parcourir les pixels d'une image
 // c un truc avec rgb ou autre
