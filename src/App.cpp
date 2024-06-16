@@ -74,9 +74,12 @@ void App::render()
     glPopMatrix();
     //COVER
     img::Image cover;
-    cover.loadFromFile("chemin/vers/votre/image.png");
+    cover.loadFromFile("../images/cover_game_pixel.png");
     GLuint textureID = loadTexture(cover);
+    glPushMatrix();
+    glScalef(0.8f, 0.8f, 0.8f);
     draw_quad_with_texture(cover);
+    glPopMatrix();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
     TextRenderer.Label("JOUER", _width / 2, 20, SimpleText::CENTER);
