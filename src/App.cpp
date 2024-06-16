@@ -22,6 +22,11 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     //load charge à partir de en haut à gauche
 
     _texture = loadTexture(test);
+
+    //COVER
+    img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
+    //load charge à partir de en haut à gauche
+    _texturecover = loadTexture(cover);
 }
 
 void App::setup()
@@ -73,12 +78,10 @@ void App::render()
     draw_quad_with_texture(_texture);
     glPopMatrix();
     //COVER
-    img::Image cover;
-    cover.loadFromFile("../images/cover_game_pixel.png");
-    GLuint textureID = loadTexture(cover);
+
     glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    draw_quad_with_texture(cover);
+    glScalef(1.0f, 1.0f, 1.0f);
+    draw_quad_with_texture(_texturecover);
     glPopMatrix();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
