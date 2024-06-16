@@ -72,6 +72,11 @@ void App::render()
     glRotatef(_angle, 0.0f, 0.0f, 1.0f); //SERT POUR LA ROTATION
     draw_quad_with_texture(_texture);
     glPopMatrix();
+    //COVER
+    img::Image cover;
+    cover.loadFromFile("chemin/vers/votre/image.png");
+    GLuint textureID = loadTexture(cover);
+    draw_quad_with_texture(cover);
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
     TextRenderer.Label("JOUER", _width / 2, 20, SimpleText::CENTER);
