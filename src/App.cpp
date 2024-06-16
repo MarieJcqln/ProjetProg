@@ -24,9 +24,9 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     _texture = loadTexture(test);
 
     //COVER
-    img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
-    //load charge à partir de en haut à gauche
-    _texturecover = loadTexture(cover);
+    // img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
+    // //load charge à partir de en haut à gauche
+    // _texturecover = loadTexture(cover);
 }
 
 void App::setup()
@@ -78,7 +78,6 @@ void App::render()
     draw_quad_with_texture(_texture);
     glPopMatrix();
     //COVER
-
     glPushMatrix();
     glScalef(1.0f, 1.0f, 1.0f);
     draw_quad_with_texture(_texturecover);
@@ -109,7 +108,7 @@ void key_callback(int key, int scancode, int action, int mods)
 //void App::key_callback(int key, int scancode, int action, int mods)
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
-   /*  if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
+    /*  if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
         glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne */
     //SI P => pause
     //SI fleche du haut : aller en haut
