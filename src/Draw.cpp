@@ -22,12 +22,12 @@
 std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size) {
   int mapwidth{10};
     std::vector<TileType> tile_list {};
-    unsigned int tile_id {0};
+    //unsigned int tile_id {0};
     size_t tile_size {size/mapwidth/mapwidth};
 
     for (size_t i {0}; i < size; i += tile_size) {
-        float x {-0.5f + i/tile_size%mapwidth * 0.1f};
-        float y {-0.5f + i/tile_size/mapwidth * 0.1f};
+        //float x {-0.5f + i/tile_size%mapwidth * 0.1f};
+        //float y {-0.5f + i/tile_size/mapwidth * 0.1f};
         
         if (map_reference[i]== 0 && map_reference[i+1]==0 && map_reference[i+2]==0){
           tile_list.push_back(TileType::Empty);
@@ -41,12 +41,13 @@ std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size) {
         else if (map_reference[i]== 1 && map_reference[i+1]==1 && map_reference[i+2]==1){
           tile_list.push_back(TileType::Path);
         }
-        tile_id++;
+        //tile_id++;
     }
     
     return tile_list;
 }
 //dessiner quadrillage
+//Grâce à la liste des types de cases de l'image et de l'association texture/type
 void quadrillage(std::vector<TileType> liste, std::unordered_map<TileType, GLuint> tile_texture_mapping){
     //boucler sur l'image
     //mettre bonne texture sur chaque quad
