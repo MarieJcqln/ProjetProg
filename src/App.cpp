@@ -1,5 +1,5 @@
 #include "App.hpp"
-#include "Draw.cpp"
+#include "Draw.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
