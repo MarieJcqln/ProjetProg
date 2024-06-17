@@ -110,6 +110,7 @@ void App::key_callback(int key, int scancode, int action, int mods)
     if (key == GLFW_KEY_A && action == GLFW_PRESS)
     { //on met A car en querty A=Q
         // glfwSetWindowShouldClose(window, GLFW_TRUE);
+        void glfwSetWindowShouldClose(GLFWwindow * window, int value);
     } //GLFW_TRUE ou 1 fonctionne
     //SI P => pause
     //SI fleche du haut : aller en haut
@@ -126,9 +127,10 @@ void App::pause_menu()
 }
 void App::mouse_button_callback(int button, int action, int mods)
 {
-    //double xpos, ypos;
+    double xpos, ypos;
     //getting cursor position
-    //glfwGetCursorPos(window, &xpos, &ypos);
+    // glfwGetCursorPos(GLFWwindow * window, &xpos, &ypos);
+    void glfwGetCursorPos(GLFWwindow * window, double *xpos, double *ypos);
     //cursor_position_callback
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
