@@ -16,13 +16,6 @@
 #include <vector>
 #include <unordered_map>
 
-enum class TileType {
-  Path,
-  Input,
-  Output,
-  Empty
-};
-
 /**
  * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
  */ 

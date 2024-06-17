@@ -5,6 +5,14 @@
 #include <simpletext.h>
 #include <iostream>
 
+
+enum class TileType {
+  Path,
+  Input,
+  Output,
+  Empty
+};
+
 class App
 {
 public:
@@ -41,8 +49,7 @@ private:
     GLuint _currentTexture{};
     float _angle{};
 
-
-  std::unordered_map<TileType, GLuint> _tile_texture_mapping {};
+    std::unordered_map<TileType, GLuint> _tile_texture_mapping {};
 
     SimpleText TextRenderer{};
 };
