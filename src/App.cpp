@@ -15,7 +15,7 @@
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
-    //img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
+    img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
 
     test.data();
     //load charge à partir de en haut à gauche

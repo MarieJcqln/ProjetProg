@@ -73,8 +73,6 @@ void quadrillage() {
             glVertex2f(w, h + 0.1f);
             glEnd();
 
-            std::cout<<App::test.data()[i]<<std::endl;
-
            /*  if (App::test.data()[i]=={}){
 
             } */
