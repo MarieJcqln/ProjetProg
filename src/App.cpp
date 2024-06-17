@@ -28,7 +28,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // test.data();
     //load charge à partir de en haut à gauche
 
-    _texture = loadTexture(map);
+    // _texture = loadTexture(map);
 
     //COVER
     img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
@@ -79,11 +79,11 @@ void App::render()
     glEnd();
 
     //MAP QUI TOURNE
-    glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f); //SERT POUR LA ROTATION
-    draw_quad_with_texture(_texture);
-    glPopMatrix();
+    // glPushMatrix();
+    // glScalef(0.8f, 0.8f, 0.8f);
+    // glRotatef(_angle, 0.0f, 0.0f, 1.0f); //SERT POUR LA ROTATION
+    // draw_quad_with_texture(_texture);
+    // glPopMatrix();
     //COVER
     glPushMatrix();
     glScalef(1.0f, 1.0f, 1.0f);
@@ -122,7 +122,7 @@ void App::pause_menu()
     glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
                                       // std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
     //ADD TEXT
-    TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+    TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 20, SimpleText::CENTER);
 }
 
 static const float GL_VIEW_SIZE = 2.;
@@ -193,6 +193,10 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     {
         img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
         _texture = loadTexture(test);
+        glPushMatrix();
+        glScalef(1.0f, 1.0f, 1.0f);
+        draw_quad_with_texture(_texture);
+        glPopMatrix();
     }
 }
 
