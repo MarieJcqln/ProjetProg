@@ -16,18 +16,18 @@
 #include <vector>
 #include <unordered_map>
 
-struct TileType {
-  enum Tile{Path,
+enum class TileType {
+  Path,
   Input,
   Output,
-  Empty};
+  Empty
 };
 
-std::unordered_map<TileType::Tile, GLuint> tile_texture_mapping{};
+std::unordered_map<TileType, GLuint> tile_texture_mapping{};
 /* 
 // load images
 GLuint App::_texture 
-tile_texture_mapping[TileType::Tile::Path] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
+tile_texture_mapping[TileType::Path] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
 tile_texture_mapping[TileType::Input] = loadTexture(img::load(make_absolute_path("images/tile_Input.png", true), 3, true));
 tile_texture_mapping[TileType::Output] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
 tile_texture_mapping[TileType::Empty] = loadTexture(img::load(make_absolute_path("images/tile_Input.png", true), 3, true));
@@ -53,6 +53,29 @@ for(unsigned int i {0}; i < tiles.size(); ++i) {
 }
  */
 
+/**
+ * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
+ */ 
+std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size) {
+  int mapwidth{10};
+    std::vector<TileType> tile_list {};
+    unsigned int tile_id {0};
+    size_t tile_size {size/mapwidth/mapwidth};
+
+    for (size_t i {0}; i < size; i += tile_size) {
+        float x {-0.5f + i/tile_size%mapwidth * SIZE_OF_CASE};
+        float y {-0.5f + i/tile_size/mapwidth * SIZE_OF_CASE};
+
+        CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
+
+        if (case_type == CASE_TYPE::BLANK) case_list.push_back({case_id, x, y, case_type, false});
+        else case_list.push_back({case_id, x, y, case_type, true});
+
+        case_id++;
+    }
+    
+    return tile_list;
+}
 //dessiner quadrillage
 void quadrillage() {
     //boucler sur l'image

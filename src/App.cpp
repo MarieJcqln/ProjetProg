@@ -1,4 +1,5 @@
 #include "App.hpp"
+#include "Draw.cpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -22,13 +23,16 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
     ///////////////mis dans la fonction onclick mouse
-    // img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
+    img::Image map{img::load(make_absolute_path("images/map.png", true), 3, true)};
     // _texture = loadTexture(test);
     //////////////////////////////
-    // test.data();
-    //load charge à partir de en haut à gauche
 
-    // _texture = loadTexture(map);
+    // Création de la liste de case
+
+    std::vector<TileType> list_tiles = create_list_tiles(map.data(), map.data_size());
+
+    //load charge à partir de en haut à gauche
+    _texture = loadTexture(map);
 
     //COVER
     img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
