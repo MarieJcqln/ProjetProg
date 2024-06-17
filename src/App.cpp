@@ -47,14 +47,14 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     _textureinput = loadTexture(input);
     _textureoutput = loadTexture(output);
 
-    _tile_texture_mapping.insert({TileType::Path , _texturepath});
-    _tile_texture_mapping.insert({TileType::Input , _textureinput});
-    _tile_texture_mapping.insert({TileType::Output , _textureoutput});
+    _tile_texture_mapping.insert({TileType::Path, _texturepath});
+    _tile_texture_mapping.insert({TileType::Input, _textureinput});
+    _tile_texture_mapping.insert({TileType::Output, _textureoutput});
     _tile_texture_mapping.insert({TileType::Empty, _texturevide});
-    
+
     //COVER
     _texturecover = loadTexture(cover);
-    _currentTexture = _texture;
+    _currentTexture = _texturecover;
 }
 
 void App::setup()
@@ -108,7 +108,7 @@ void App::render()
     //COVER
     glPushMatrix();
     glScalef(1.0f, 1.0f, 1.0f);
-    draw_quad_with_texture(_texturecover);
+    draw_quad_with_texture(_currentTexture);
     glPopMatrix();
 
     TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);
@@ -215,10 +215,11 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     // if (red == 1.0f && green == 0.0f && blue == 0.0f) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     if (xpos <= 0.3f && xpos >= -0.3f && ypos <= -0.15f && ypos >= -0.25f)
     {
-        glPushMatrix();
-        glScalef(1.0f, 1.0f, 1.0f);
-        draw_quad_with_texture(_texture);
-        glPopMatrix();
+        // glPushMatrix();
+        // glScalef(1.0f, 1.0f, 1.0f);
+        // draw_quad_with_texture(_texture);
+        // glPopMatrix();
+        _currentTexture = _texture;
     }
 }
 

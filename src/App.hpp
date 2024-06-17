@@ -4,13 +4,14 @@
 #include <GLFW/glfw3.h>
 #include <simpletext.h>
 #include <iostream>
+#include <unordered_map>
 
-
-enum class TileType {
-  Path,
-  Input,
-  Output,
-  Empty
+enum class TileType
+{
+    Path,
+    Input,
+    Output,
+    Empty
 };
 
 class App
@@ -29,7 +30,6 @@ public:
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
     void size_callback(int width, int height);
-    
 
 private:
     void render();
@@ -49,7 +49,7 @@ private:
     GLuint _currentTexture{};
     float _angle{};
 
-    std::unordered_map<TileType, GLuint> _tile_texture_mapping {};
+    std::unordered_map<TileType, GLuint> _tile_texture_mapping{};
 
     SimpleText TextRenderer{};
 };
