@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "App.hpp"
+#include "Draw.hpp"
 
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 10;
