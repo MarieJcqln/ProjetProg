@@ -50,9 +50,10 @@ std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size)
     }
     //tile_id++;
   }
-
+  //std::cout<<"Tile list:"<<tile_list<<std::endl;
   return tile_list;
 }
+
 //dessiner quadrillage
 //Grâce à la liste des types de cases de l'image et de l'association texture/type
 void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLuint> &tile_texture_mapping)
@@ -62,9 +63,9 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
   int i{0};
   float taille{0.1f};
   glColor3f(0.0f, 0.0f, 0.0f);
-  for (float h = -0.5f; h < 0.5f; h += 0.1f)
+  for (float h = -0.5f; h < 0.4f; h += 0.1f)
   {
-    for (float w = -0.5f; w < 0.5f; w += 0.1f)
+    for (float w = -0.5f; w < 0.4f; w += 0.1f)
     {
       glBegin(GL_QUADS);
       glTexCoord2d(0, 0);
@@ -76,6 +77,7 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
       glTexCoord2d(0, 1);
       glVertex2f(w, h + 0.1f);
       glEnd();
+      //std::cout<<"liste[i]:"<<char(liste[i])<<std::endl;
 
       if (liste[i] == TileType::Empty)
       {
@@ -93,10 +95,6 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
       {
         draw_quad_with_texture(tile_texture_mapping[TileType::Path],w,h,taille);
       }
-
-      w = w + 0.1f;
-      i++;
     }
-    h = h + 0.1f;
   }
 }
