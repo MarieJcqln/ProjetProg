@@ -31,6 +31,11 @@ public:
     void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
     void size_callback(int width, int height);
 
+    GLuint _texturevide{};
+    GLuint _texturepath{};
+    GLuint _textureinput{};
+    GLuint _textureoutput{};
+    
 private:
     void render();
 
@@ -41,10 +46,6 @@ private:
 
     // Add your variables here
     GLuint _texture{};
-    GLuint _texturevide{};
-    GLuint _texturepath{};
-    GLuint _textureinput{};
-    GLuint _textureoutput{};
     GLuint _texturecover{};
     GLuint _currentTexture{};
     float _angle{};

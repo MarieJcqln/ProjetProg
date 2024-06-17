@@ -47,7 +47,7 @@ std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size) {
     return tile_list;
 }
 //dessiner quadrillage
-void quadrillage(std::vector<TileType> liste) {
+void quadrillage(std::vector<TileType> liste, std::unordered_map<TileType, GLuint> tile_texture_mapping){
     //boucler sur l'image
     //mettre bonne texture sur chaque quad
     int i{0};
@@ -66,32 +66,22 @@ void quadrillage(std::vector<TileType> liste) {
             glVertex2f(w, h + 0.1f);
             glEnd();
 
-           /*  if (App::test.data()[i]=={vide}){
-           draw_quad_with_texture(_texturevide);
-            } 
-            else if (App::test.data()[i]=={entree}){
-           draw_quad_with_texture(_textureentree);
-            } 
-            else if (App::test.data()[i]=={sortie}){
-           draw_quad_with_texture(_texturesortie);
-            } 
-            else if (App::test.data()[i]=={chemin}){
-           draw_quad_with_texture(_texturechemin);
-            } */
+          if (liste[i]==TileType::Empty){
+            draw_quad_with_texture(tile_texture_mapping[TileType::Empty]);
+          } 
+          else if (liste[i]==TileType::Input){
+            draw_quad_with_texture(tile_texture_mapping[TileType::Input]);
+          } 
+          else if (liste[i]==TileType::Output){
+            draw_quad_with_texture(tile_texture_mapping[TileType::Output]);
+          }
+          else if (liste[i]==TileType::Path){
+            draw_quad_with_texture(tile_texture_mapping[TileType::Path]);
+          }
 
-            w= w+0.1f;
-            i++;
-            }
-
+          w= w+0.1f;
+          i++;
+        }
         h= h+0.1f;
-
-        glPushMatrix();
-        glScalef(0.8f, 0.8f, 0.8f);
-        //glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-        //if
-        //draw_quad_with_texture(_texture);
-        glPopMatrix();
-        //App::App.test.data()
-    }
-
+        }
 }
