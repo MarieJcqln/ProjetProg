@@ -101,7 +101,7 @@ void App::render()
     //COVER
     glPushMatrix();
     glScalef(1.0f, 1.0f, 1.0f);
-    draw_quad_with_texture(_currentTexture);
+    draw_quad_with_texture(_currentTexture, -0.5f, -0.5f, 1.0f);
     glPopMatrix();
 
     TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);

@@ -60,12 +60,12 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
   //boucler sur l'image
   //mettre bonne texture sur chaque quad
   int i{0};
+  float taille{0.1f};
   glColor3f(0.0f, 0.0f, 0.0f);
-  for (float h = -0.5f; h <= 0.5f; h += 0.1f)
+  for (float h = -0.5f; h < 0.5f; h += 0.1f)
   {
-    for (float w = -0.5f; w <= 0.5f; w += 0.1f)
+    for (float w = -0.5f; w < 0.5f; w += 0.1f)
     {
-
       glBegin(GL_QUADS);
       glTexCoord2d(0, 0);
       glVertex2f(w, h);
@@ -79,19 +79,19 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
 
       if (liste[i] == TileType::Empty)
       {
-        draw_quad_with_texture(tile_texture_mapping[TileType::Empty]);
+        draw_quad_with_texture(tile_texture_mapping[TileType::Empty],w,h, taille);
       }
       else if (liste[i] == TileType::Input)
       {
-        draw_quad_with_texture(tile_texture_mapping[TileType::Input]);
+        draw_quad_with_texture(tile_texture_mapping[TileType::Input],w,h,taille);
       }
       else if (liste[i] == TileType::Output)
       {
-        draw_quad_with_texture(tile_texture_mapping[TileType::Output]);
+        draw_quad_with_texture(tile_texture_mapping[TileType::Output],w,h,taille);
       }
       else if (liste[i] == TileType::Path)
       {
-        draw_quad_with_texture(tile_texture_mapping[TileType::Path]);
+        draw_quad_with_texture(tile_texture_mapping[TileType::Path],w,h,taille);
       }
 
       w = w + 0.1f;
