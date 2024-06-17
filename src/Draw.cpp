@@ -57,6 +57,7 @@ for(unsigned int i {0}; i < tiles.size(); ++i) {
 void quadrillage() {
     //boucler sur l'image
     //mettre bonne texture sur chaque quad
+    int i{0};
     glColor3f(0.0f, 0.0f, 0.0f);
     for (float h = -0.5f; h <= 0.5f; h += 0.1f) {
         for (float w = -0.5f; w <= 0.5f; w += 0.1f) {
@@ -72,7 +73,14 @@ void quadrillage() {
             glVertex2f(w, h + 0.1f);
             glEnd();
 
+            std::cout<<App::test.data()[i]<<std::endl;
+
+           /*  if (App::test.data()[i]=={}){
+
+            } */
+
             w= w+0.1f;
+            i++;
             }
 
         h= h+0.1f;

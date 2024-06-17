@@ -9,6 +9,7 @@ class App
 {
 public:
     App();
+    img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
 
     void setup();
     void update();
