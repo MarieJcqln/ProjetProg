@@ -125,11 +125,11 @@ void App::pause_menu()
 }
 void App::mouse_button_callback(int button, int action, int mods)
 {
-    double xpos, ypos;
+    //double xpos, ypos;
     //getting cursor position
     //glfwGetCursorPos(window, &xpos, &ypos);
     //cursor_position_callback
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)// && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
         pause_menu();
     }
