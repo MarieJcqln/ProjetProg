@@ -103,13 +103,14 @@ void App::render()
 }
 
 ///// CODE AJOUTE 3)2)//////
-void key_callback(int key, int scancode, int action, int mods)
+void App::key_callback(int key, int scancode, int action, int mods)
 ////// FIN CODE AJOUTE 3)2///////
-//void App::key_callback(int key, int scancode, int action, int mods)
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
-    /*  if (key == GLFW_KEY_A && action == GLFW_PRESS)   //on met A car en querty A=Q
-        glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne */
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    { //on met A car en querty A=Q
+        // glfwSetWindowShouldClose(window, GLFW_TRUE);
+    } //GLFW_TRUE ou 1 fonctionne
     //SI P => pause
     //SI fleche du haut : aller en haut
     //SI fleche du bas : aller en bas
@@ -129,7 +130,7 @@ void App::mouse_button_callback(int button, int action, int mods)
     //getting cursor position
     //glfwGetCursorPos(window, &xpos, &ypos);
     //cursor_position_callback
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)// && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
         pause_menu();
     }
@@ -147,7 +148,7 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 //glEnable(GL_BLEND);
 void App::cursor_position_callback(double xpos, double ypos)
 { //getting cursor position
-    //glfwGetCursorPos(window, &xpos, &ypos);
+    // glfwGetCursorPos(&xpos, &ypos);
 
     // if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     // {
