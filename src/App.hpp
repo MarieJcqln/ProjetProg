@@ -33,6 +33,7 @@ private:
     // Add your variables here
     GLuint _texture{};
     GLuint _texturecover{};
+    GLuint _currentTexture{};
     float _angle{};
 
     SimpleText TextRenderer{};

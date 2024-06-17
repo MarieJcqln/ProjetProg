@@ -23,21 +23,23 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
     ///////////////mis dans la fonction onclick mouse
+    //MAP
     img::Image map{img::load(make_absolute_path("images/map.png", true), 3, true)};
+    //COVER
+    img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
     // _texture = loadTexture(test);
     //////////////////////////////
 
     // Création de la liste de case
 
-    std::vector<TileType> list_tiles = create_list_tiles(map.data(), map.data_size());
+    // std::vector<TileType> list_tiles = create_list_tiles(map.data(), map.data_size());
 
     //load charge à partir de en haut à gauche
+    //MAP
     _texture = loadTexture(map);
-
     //COVER
-    img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
-    // //load charge à partir de en haut à gauche
     _texturecover = loadTexture(cover);
+    _currentTexture = _texture;
 }
 
 void App::setup()
@@ -94,6 +96,7 @@ void App::render()
     draw_quad_with_texture(_texturecover);
     glPopMatrix();
 
+    TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);
     // render exemple quad
     glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
     glBegin(GL_QUADS);
@@ -102,7 +105,6 @@ void App::render()
     glVertex2f(0.3f, -0.15f);
     glVertex2f(-0.3f, -0.15f);
     glEnd();
-    TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);
     TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
 
     // Without set precision
@@ -124,16 +126,13 @@ void App::render()
 void App::pause_menu()
 {
     glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
-                                      // std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
-    //ADD TEXT
     TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 20, SimpleText::CENTER);
 }
 
-static const float GL_VIEW_SIZE = 2.;
+static const float GL_VIEW_SIZE = 2.0f;
+
 void App::conversion(double &xpos, double &ypos)
 {
-    // xpos = (2 * xpos / _height) - 1;
-    // ypos = -((2 * ypos / _height) - 1);
     xpos = ((xpos - (_width / 2)) * GL_VIEW_SIZE / _height);
     ypos = -((ypos - (_height / 2)) * GL_VIEW_SIZE / _height);
 }
@@ -148,6 +147,12 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
 
         // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
         glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne
+    }
+    if (key == GLFW_KEY_P && action == GLFW_PRESS)
+    { //on met A car en querty A=Q
+
+        // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
+        pause_menu(); //GLFW_TRUE ou 1 fonctionne
     }
     //SI P => pause
     //SI fleche du haut : aller en haut
@@ -195,8 +200,6 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     // if (red == 1.0f && green == 0.0f && blue == 0.0f) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     if (xpos <= 0.3f && xpos >= -0.3f && ypos <= -0.15f && ypos >= -0.25f)
     {
-        img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
-        _texture = loadTexture(test);
         glPushMatrix();
         glScalef(1.0f, 1.0f, 1.0f);
         draw_quad_with_texture(_texture);
