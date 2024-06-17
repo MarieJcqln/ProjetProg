@@ -63,15 +63,18 @@ std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size) {
     size_t tile_size {size/mapwidth/mapwidth};
 
     for (size_t i {0}; i < size; i += tile_size) {
-        float x {-0.5f + i/tile_size%mapwidth * SIZE_OF_CASE};
-        float y {-0.5f + i/tile_size/mapwidth * SIZE_OF_CASE};
+        float x {-0.5f + i/tile_size%mapwidth * 0.1f};
+        float y {-0.5f + i/tile_size/mapwidth * 0.1f};
 
-        CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
+        //CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
+        if (map_reference[i], map_reference[i+1], map_reference[i+2]){
 
-        if (case_type == CASE_TYPE::BLANK) case_list.push_back({case_id, x, y, case_type, false});
-        else case_list.push_back({case_id, x, y, case_type, true});
+        }
 
-        case_id++;
+        //if (case_type == CASE_TYPE::BLANK) tile_list.push_back({tile_id, x, y, case_type, false});
+        //else tile_list.push_back({tile_id, x, y, case_type, true});
+
+        tile_id++;
     }
     
     return tile_list;
