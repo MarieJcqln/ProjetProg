@@ -21,6 +21,7 @@ public:
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
     void size_callback(int width, int height);
+    
 
 private:
     void render();
@@ -32,9 +33,16 @@ private:
 
     // Add your variables here
     GLuint _texture{};
+    GLuint _texturevide{};
+    GLuint _texturepath{};
+    GLuint _textureinput{};
+    GLuint _textureoutput{};
     GLuint _texturecover{};
     GLuint _currentTexture{};
     float _angle{};
+
+
+  std::unordered_map<TileType, GLuint> _tile_texture_mapping {};
 
     SimpleText TextRenderer{};
 };

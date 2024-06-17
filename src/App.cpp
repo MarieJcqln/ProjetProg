@@ -27,9 +27,14 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image map{img::load(make_absolute_path("images/map.png", true), 3, true)};
     //COVER
     img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
+
+    img::Image vide{img::load(make_absolute_path("images/sable_pixel.png", true), 3, true)};
+    img::Image path{img::load(make_absolute_path("images/mer_pixel.png", true), 3, true)};
+    img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
+    img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
+
     // _texture = loadTexture(test);
     //////////////////////////////
-
     // Création de la liste de case
 
     // std::vector<TileType> list_tiles = create_list_tiles(map.data(), map.data_size());
@@ -37,6 +42,16 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     //load charge à partir de en haut à gauche
     //MAP
     _texture = loadTexture(map);
+    _texturevide = loadTexture(vide);
+    _texturepath = loadTexture(path);
+    _textureinput = loadTexture(input);
+    _textureoutput = loadTexture(output);
+
+    _tile_texture_mapping.insert({TileType::Path , _texturepath});
+    _tile_texture_mapping.insert({TileType::Input , _textureinput});
+    _tile_texture_mapping.insert({TileType::Output , _textureoutput});
+    _tile_texture_mapping.insert({TileType::Empty, _texturevide});
+    
     //COVER
     _texturecover = loadTexture(cover);
     _currentTexture = _texture;
