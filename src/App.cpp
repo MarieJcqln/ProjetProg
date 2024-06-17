@@ -21,7 +21,7 @@
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
-    img::Image map{img::load(make_absolute_path("images/map.png", true), 3, false)};
+    img::Image map{img::load(make_absolute_path("images/map.png", true), 3, true)};
 
     //appelfct(map.data(),map.size())
 
