@@ -16,18 +16,18 @@
 #include <vector>
 #include <unordered_map>
 
-/* Code Enguerrand 
-enum class TileType {
-  Path,
+struct TileType {
+  enum Tile{Path,
   Input,
   Output,
-  Empty
+  Empty};
 };
 
-std::unordered_map<TileType, GLuint> tile_texture_mapping{};
-
+std::unordered_map<TileType::Tile, GLuint> tile_texture_mapping{};
+/* 
 // load images
-tile_texture_mapping[TileType::Path] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
+GLuint App::_texture 
+tile_texture_mapping[TileType::Tile::Path] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
 tile_texture_mapping[TileType::Input] = loadTexture(img::load(make_absolute_path("images/tile_Input.png", true), 3, true));
 tile_texture_mapping[TileType::Output] = loadTexture(img::load(make_absolute_path("images/tile_path.png", true), 3, true));
 tile_texture_mapping[TileType::Empty] = loadTexture(img::load(make_absolute_path("images/tile_Input.png", true), 3, true));
@@ -50,8 +50,8 @@ for(unsigned int i {0}; i < tiles.size(); ++i) {
   draw_quad_with_texture(tile_texture_id );
   glPopMatrix();
   // ...
-} */
-
+}
+ */
 
 //dessiner quadrillage
 void quadrillage() {
@@ -73,8 +73,17 @@ void quadrillage() {
             glVertex2f(w, h + 0.1f);
             glEnd();
 
-           /*  if (App::test.data()[i]=={}){
-
+           /*  if (App::test.data()[i]=={vide}){
+           draw_quad_with_texture(_texturevide);
+            } 
+            else if (App::test.data()[i]=={entree}){
+           draw_quad_with_texture(_textureentree);
+            } 
+            else if (App::test.data()[i]=={sortie}){
+           draw_quad_with_texture(_texturesortie);
+            } 
+            else if (App::test.data()[i]=={chemin}){
+           draw_quad_with_texture(_texturechemin);
             } */
 
             w= w+0.1f;
