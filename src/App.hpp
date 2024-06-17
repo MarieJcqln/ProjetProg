@@ -22,7 +22,11 @@ public:
     void setup();
     void update();
     void conversion(double &xpos, double &ypos);
+    void bouton_jouer();
     void pause_menu();
+    bool _boutonJouerClicked = false;
+    bool _uptoplay = false;
+    std::vector<TileType> _liste;
 
     // GLFW callbacks binding
     void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
@@ -35,7 +39,7 @@ public:
     GLuint _texturepath{};
     GLuint _textureinput{};
     GLuint _textureoutput{};
-    
+
 private:
     void render();
 

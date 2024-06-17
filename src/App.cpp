@@ -25,6 +25,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     ///////////////mis dans la fonction onclick mouse
     //MAP
     img::Image map{img::load(make_absolute_path("images/map.png", true), 3, true)};
+
     //COVER
     img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
 
@@ -33,6 +34,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
     img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
 
+    _liste = create_list_tiles(map.data(), map.data_size());
     // _texture = loadTexture(test);
     //////////////////////////////
     // Création de la liste de case
@@ -90,15 +92,6 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // render exemple quad
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.5f, -0.5f);
-    glVertex2f(0.5f, -0.5f);
-    glVertex2f(0.5f, 0.5f);
-    glVertex2f(-0.5f, 0.5f);
-    glEnd();
-
     //MAP QUI TOURNE
     // glPushMatrix();
     // glScalef(0.8f, 0.8f, 0.8f);
@@ -112,15 +105,16 @@ void App::render()
     glPopMatrix();
 
     TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);
-    // render exemple quad
-    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.3f, -0.25f);
-    glVertex2f(0.3f, -0.25f);
-    glVertex2f(0.3f, -0.15f);
-    glVertex2f(-0.3f, -0.15f);
-    glEnd();
-    TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+
+    if (!_boutonJouerClicked) //tant que bouton jouer pas cliquer on l'affiche
+    {                         // Dessiner le bouton seulement si pas cliqué
+        bouton_jouer();
+    }
+
+    if (_uptoplay)
+    {
+        quadrillage(_liste, _tile_texture_mapping);
+    }
 
     // Without set precision
     const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
@@ -138,10 +132,31 @@ void App::render()
     TextRenderer.Render();
 }
 
+void App::bouton_jouer()
+{
+    // render exemple quad
+    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(-0.3f, -0.25f);
+    glVertex2f(0.3f, -0.25f);
+    glVertex2f(0.3f, -0.15f);
+    glVertex2f(-0.3f, -0.15f);
+    glEnd();
+    TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+}
+
 void App::pause_menu()
 {
-    glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
     TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 20, SimpleText::CENTER);
+    bouton_jouer();
+    glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
+    glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(-0.5f, -0.5f);
+    glVertex2f(0.5f, -0.5f);
+    glVertex2f(0.5f, 0.5f);
+    glVertex2f(-0.5f, 0.5f);
+    glEnd();
 }
 
 static const float GL_VIEW_SIZE = 2.0f;
@@ -220,6 +235,11 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
         // draw_quad_with_texture(_texture);
         // glPopMatrix();
         _currentTexture = _texture;
+        _uptoplay = true;
+        _boutonJouerClicked = true;
+        //enelevr le quads rouge
+        // glClear(GL_COLOR_BUFFER_BIT);
+        render();
     }
 }
 
