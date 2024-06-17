@@ -12,20 +12,26 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
+//pour utiliser la couche alpha
+// #include <GL/glut.h>
+
+// glEnable(GL_BLEND);
+// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
     img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
 
-    test.data();
+    // test.data();
     //load charge à partir de en haut à gauche
 
     _texture = loadTexture(test);
 
     //COVER
-    // img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
+    img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
     // //load charge à partir de en haut à gauche
-    // _texturecover = loadTexture(cover);
+    _texturecover = loadTexture(cover);
 }
 
 void App::setup()
@@ -83,18 +89,26 @@ void App::render()
     glPopMatrix();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
+    // render exemple quad
+    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(-0.3f, -0.3f);
+    glVertex2f(0.3f, -0.3f);
+    glVertex2f(0.3f, -0.1f);
+    glVertex2f(-0.3f, -0.1f);
+    glEnd();
     TextRenderer.Label("JOUER", _width / 2, 20, SimpleText::CENTER);
 
     // Without set precision
-    // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
+    const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
     // With c++20 you can use std::format
     // const std::string angle_label_text { std::format("Angle: {:.2f}", _angle) };
 
     // Using stringstream to format the string with fixed precision
-    std::string angle_label_text{};
-    std::stringstream stream{};
-    //stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
-    angle_label_text = stream.str();
+    // std::string angle_label_text{};
+    // std::stringstream stream{};
+    // stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
+    // angle_label_text = stream.str();
 
     TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
@@ -144,9 +158,6 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 {
 }
 
-//pour utiliser la couche alpha
-//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//glEnable(GL_BLEND);
 void App::cursor_position_callback(double xpos, double ypos)
 { //getting cursor position
     // glfwGetCursorPos(&xpos, &ypos);
