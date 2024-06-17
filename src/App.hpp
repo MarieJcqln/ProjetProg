@@ -23,8 +23,11 @@ public:
     void update();
     void conversion(double &xpos, double &ypos);
     void bouton_jouer();
+    void bouton_rejouer();
+    void bouton_continuer();
     void pause_menu();
     bool _boutonJouerClicked = false;
+    bool _pauseClicked = false;
     bool _uptoplay = false;
     std::vector<TileType> _liste;
 
