@@ -21,12 +21,14 @@
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
-    img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
+    img::Image map{img::load(make_absolute_path("images/map.png", true), 3, false)};
 
-    // test.data();
+    //appelfct(map.data(),map.size())
+
+    // map.data();
     //load charge à partir de en haut à gauche
 
-    _texture = loadTexture(test);
+    _texture = loadTexture(map);
 
     //COVER
     img::Image cover{img::load(make_absolute_path("images/cover_game_pixel.png", true), 3, true)};
