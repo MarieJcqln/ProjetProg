@@ -34,7 +34,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
     img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
 
+
+    
     _liste = create_list_tiles(map.data(), map.data_size());
+
     // _texture = loadTexture(test);
     //////////////////////////////
     // Création de la liste de case
@@ -115,10 +118,6 @@ void App::render()
     {
         quadrillage(_liste, _tile_texture_mapping);
     }
-    if (_pauseClicked)
-    {
-        pause_menu();
-    }
 
     // Without set precision
     const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
@@ -149,35 +148,10 @@ void App::bouton_jouer()
     TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
 }
 
-void App::bouton_rejouer()
-{
-    // render exemple quad
-    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.3f, -0.0f);
-    glVertex2f(0.3f, -0.0f);
-    glVertex2f(0.3f, 0.10f);
-    glVertex2f(-0.3f, 0.10f);
-    glEnd();
-    TextRenderer.Label("REJOUER", _width / 2, 3.0 * _height / 6, SimpleText::CENTER);
-}
-
-void App::bouton_continuer()
-{
-    // render exemple quad
-    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.3f, -0.25f);
-    glVertex2f(0.3f, -0.25f);
-    glVertex2f(0.3f, -0.15f);
-    glVertex2f(-0.3f, -0.15f);
-    glEnd();
-    TextRenderer.Label("CONTINUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
-}
-
 void App::pause_menu()
 {
-
+    TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 20, SimpleText::CENTER);
+    bouton_jouer();
     glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
     glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
     glBegin(GL_QUADS);
@@ -186,10 +160,6 @@ void App::pause_menu()
     glVertex2f(0.5f, 0.5f);
     glVertex2f(-0.5f, 0.5f);
     glEnd();
-    TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 2.3 * _height / 6, SimpleText::CENTER);
-    bouton_rejouer();
-    bouton_continuer();
-    _boutonJouerClicked = false;
 }
 
 static const float GL_VIEW_SIZE = 2.0f;
@@ -215,7 +185,7 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
     { //on met A car en querty A=Q
 
         // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
-        _pauseClicked = true;
+        pause_menu(); //GLFW_TRUE ou 1 fonctionne
     }
     //SI P => pause
     //SI fleche du haut : aller en haut
@@ -252,7 +222,7 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     //cursor_position_callback
     if (xpos <= 0.5f && xpos >= 0.4 && ypos <= 0.5f && ypos >= 0.4) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
-        _pauseClicked = true;
+        pause_menu();
     }
 
     // float red, green, blue;
@@ -270,7 +240,6 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
         _currentTexture = _texture;
         _uptoplay = true;
         _boutonJouerClicked = true;
-        _pauseClicked = false;
         //enelevr le quads rouge
         // glClear(GL_COLOR_BUFFER_BIT);
         render();
