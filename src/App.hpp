@@ -25,8 +25,11 @@ public:
     void bouton_jouer();
     void bouton_rejouer();
     void bouton_continuer();
+    void bouton_pause();
     void pause_menu();
     bool _boutonJouerClicked = false;
+    bool _boutonRejouerCliked = false;
+    bool _boutonContinuerCliked = false;
     bool _pauseClicked = false;
     bool _uptoplay = false;
     std::vector<TileType> _liste;
@@ -49,6 +52,8 @@ private:
     int _width{};
     int _height{};
     double _previousTime{};
+    bool _isPaused{};
+    // double _elapsedTime{};
     float _viewSize{};
 
     // Add your variables here

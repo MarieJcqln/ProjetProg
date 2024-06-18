@@ -105,10 +105,11 @@ void App::render()
     draw_quad_with_texture(_currentTexture, -0.5f, -0.5f, 1.0f);
     glPopMatrix();
 
-    TextRenderer.Label("BITCHARK", _width / 2, _height / 3, SimpleText::CENTER);
+    TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 3, SimpleText::CENTER);
 
     if (!_boutonJouerClicked) //tant que bouton jouer pas cliquer on l'affiche
     {                         // Dessiner le bouton seulement si pas cliqué
+
         bouton_jouer();
     }
 
@@ -118,24 +119,24 @@ void App::render()
         quadrillage(_liste, _tile_texture_mapping);
     }
 
-    if (!_pauseClicked && _boutonJouerClicked)
+    if ((!_pauseClicked && _boutonJouerClicked))
     {
-        //dessin du bouton pause
-        glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
-        glBegin(GL_QUADS);
-        glVertex2f(0.4f, 0.4f);
-        glVertex2f(0.43f, 0.4f);
-        glVertex2f(0.43f, 0.49f);
-        glVertex2f(0.4f, 0.49f);
-        glEnd();
-        // glColor4f(1.0f, 0.8f, 0.2f, 0.5f);
-        glBegin(GL_QUADS);
-        glVertex2f(0.48f, 0.4f);
-        glVertex2f(0.45f, 0.4f);
-        glVertex2f(0.45f, 0.49f);
-        glVertex2f(0.48f, 0.49f);
-        glEnd();
+        //on lance le chrono à 0
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        bouton_pause();
     }
+
+    if (_boutonRejouerCliked)
+    {
+        //on lance le chrono à 0
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        bouton_pause();
+    }
+
+    double time_pause{0};
+
     if (_pauseClicked)
     {
         pause_menu();
@@ -160,10 +161,18 @@ void App::render()
         glVertex2f(0.48f, 0.49f);
         glEnd();
         glLoadIdentity();
+        time_pause = _previousTime;
+        _previousTime = 0;
     }
-
+    if (_boutonContinuerCliked)
+    {
+        _uptoplay = true;
+        _previousTime += time_pause;
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+    }
     // Without set precision
-    const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
+    // const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
     // With c++20 you can use std::format
     // const std::string angle_label_text { std::format("Angle: {:.2f}", _angle) };
 
@@ -173,7 +182,7 @@ void App::render()
     // stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
     // angle_label_text = stream.str();
 
-    TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+    // TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
     TextRenderer.Render();
 }
@@ -206,7 +215,7 @@ void App::bouton_rejouer()
 void App::bouton_continuer()
 {
     // render exemple quad
-    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+    glColor4f(0.0f, 0.0f, 1.0f, 0.5f);
     glBegin(GL_QUADS);
     glVertex2f(-0.3f, -0.25f);
     glVertex2f(0.3f, -0.25f);
@@ -214,6 +223,25 @@ void App::bouton_continuer()
     glVertex2f(-0.3f, -0.15f);
     glEnd();
     TextRenderer.Label("CONTINUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+}
+
+void App::bouton_pause()
+{
+    //dessin du bouton pause
+    glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(0.4f, 0.4f);
+    glVertex2f(0.43f, 0.4f);
+    glVertex2f(0.43f, 0.49f);
+    glVertex2f(0.4f, 0.49f);
+    glEnd();
+    // glColor4f(1.0f, 0.8f, 0.2f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(0.48f, 0.4f);
+    glVertex2f(0.45f, 0.4f);
+    glVertex2f(0.45f, 0.49f);
+    glVertex2f(0.48f, 0.49f);
+    glEnd();
 }
 
 void App::pause_menu()
@@ -230,7 +258,6 @@ void App::pause_menu()
     TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 2.3 * _height / 6, SimpleText::CENTER);
     bouton_rejouer();
     bouton_continuer();
-    _boutonJouerClicked = false;
 }
 
 static const float GL_VIEW_SIZE = 2.0f;
@@ -289,7 +316,6 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 
 void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
 {
-
     //cursor_position_callback
     if (xpos <= 0.5f && xpos >= 0.4 && ypos <= 0.5f && ypos >= 0.4) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
@@ -300,24 +326,21 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
         // }
     }
 
-    // float red, green, blue;
-    // glGetFloatv(GL_CURRENT_COLOR, &red);       // Récupérer la composante rouge de la couleur actuelle
-    // glGetFloatv(GL_CURRENT_COLOR + 1, &green); // Récupérer la composante verte de la couleur actuelle
-    // glGetFloatv(GL_CURRENT_COLOR + 2, &blue);  // Récupérer la composante bleue de la couleur actuelle
-
-    // if (red == 1.0f && green == 0.0f && blue == 0.0f) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     if (xpos <= 0.3f && xpos >= -0.3f && ypos <= -0.15f && ypos >= -0.25f)
     {
-        // glPushMatrix();
-        // glScalef(1.0f, 1.0f, 1.0f);
-        // draw_quad_with_texture(_texture);
-        // glPopMatrix();
         _currentTexture = _texture;
-        _uptoplay = true;
-        _boutonJouerClicked = true;
         _pauseClicked = false;
-        //enelevr le quads rouge
-        // glClear(GL_COLOR_BUFFER_BIT);
+        _boutonJouerClicked = true;
+        _uptoplay = true;
+        render();
+    }
+
+    else if (xpos <= 0.3f && xpos >= -0.3f && ypos <= 0.00f && ypos >= -0.10f) //si clique sur rejouer
+    {
+        _uptoplay = true;
+        _currentTexture = _texture;
+        _boutonRejouerCliked = true;
+        _pauseClicked = false;
         render();
     }
 }
