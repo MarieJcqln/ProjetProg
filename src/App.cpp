@@ -142,8 +142,7 @@ void App::render()
         //pour transformer le bouton pause en croix
         glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
         glRotatef(45, 0., 0., 1.);
-        glTranslatef(0.5f, 0.0f, 0.0f);
-        glTranslatef(0.0f, -0.25f, 0.0f);
+        glTranslatef(0.19f, -0.45f, 0.0f);
         glBegin(GL_QUADS);
         glVertex2f(0.4f, 0.4f);
         glVertex2f(0.43f, 0.4f);
@@ -153,8 +152,7 @@ void App::render()
         glLoadIdentity();
         // glColor4f(1.0f, 0.8f, 0.2f, 0.5f);
         glRotatef(-45, 0., 0., 1.);
-        glTranslatef(0.0f, 0.5f, 0.0f);
-        glTranslatef(-0.25f, 0.f, 0.0f);
+        glTranslatef(-0.45f, 0.17f, 0.0f);
         glBegin(GL_QUADS);
         glVertex2f(0.48f, 0.4f);
         glVertex2f(0.45f, 0.4f);
