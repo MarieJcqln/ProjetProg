@@ -59,6 +59,18 @@ add_library(glad third_party/glad/src/glad.c)
 target_include_directories(glad PUBLIC third_party/glad/include)
 target_link_libraries(${PROJECT_NAME} PUBLIC glad)
 
+# ---img---
+FetchContent_Declare(
+    img
+    GIT_REPOSITORY https://github.com/CoolLibs/img
+    GIT_TAG da961a78b622db4f4b26df690b38ac3054e61806
+)
+
+FetchContent_MakeAvailable(img)
+
+# Link the library
+target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
+
 ####################################################
 #################################################"#"
 # # ---GLFW---

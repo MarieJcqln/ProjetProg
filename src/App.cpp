@@ -34,7 +34,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0), _elapsedTime(0.0), _pauseStartT
     img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
     img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
 
-    _liste = create_list_tiles(map.data(), map.data_size());
+    std::cout<<"Map data : "<<map.data()[1]<<std::endl;
+
+    //_liste = create_list_tiles(map.data(), map.data_size());
+    _liste = create_list_tiles(map);
 
     // _texture = loadTexture(test);
     //////////////////////////////

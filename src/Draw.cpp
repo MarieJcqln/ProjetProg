@@ -20,7 +20,7 @@
 /**
  * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
  */
-std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size)
+/* std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size)
 {
   int mapwidth{10};
   std::vector<TileType> tile_list{};
@@ -52,7 +52,67 @@ std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size)
   }
   //std::cout<<"Tile list:"<<tile_list<<std::endl;
   return tile_list;
-}
+} */
+
+std::vector<TileType> create_list_tiles(img::Image &baseMap)
+{
+  std::vector<TileType> listCases;
+    int width = baseMap.width();
+    int height = baseMap.height();
+    int size = width * height;
+
+    for (int i = 0; i < size; i++)
+    {
+        double x = i % width;
+        double y = height - 1 - (i / width);
+
+        glm::vec3 color;
+        color.r = baseMap.data()[i * 3];
+        color.g = baseMap.data()[i * 3 + 1];
+        color.b = baseMap.data()[i * 3 + 2];
+
+        // On vérifie si la couleur correspond à un type de case
+        std::array<float, 3> colorTab = {color.r, color.g, color.b};
+        bool found = false;
+        std::array<float, 3> red = {255.0, 0.0, 0.0};
+        std::array<float, 3> blue = {0.0, 0.0, 255.0};
+        std::array<float, 3> white ={255.0, 255.0, 255.0};
+        std::array<float, 3> black ={0.0, 0.0, 0.0};
+ 
+        for (unsigned long j = 0; j < 4; j++)
+        {
+            if (colorTab == white ) // si la couleur correspond au blanc
+            {
+                listCases.push_back(TileType::Path);
+                found = true;
+                break;
+            }
+            if (colorTab == red ) // si la couleur correspond au rouge
+            {
+                listCases.push_back(TileType::Input);
+                found = true;
+                break;
+            }
+            if (colorTab == blue ) // si la couleur correspond au bleu
+            {
+                listCases.push_back(TileType::Output);
+                found = true;
+                break;
+            }
+            if (colorTab == black ) // si la couleur correspond au noir
+            {
+                listCases.push_back(TileType::Empty);
+                found = true;
+                break;
+            }
+        }
+        if (!found) // si la couleur ne correspond à aucun type de case
+        {
+            listCases.push_back(TileType::Empty);
+        } 
+    }
+    return listCases;
+} 
 
 //dessiner quadrillage
 //Grâce à la liste des types de cases de l'image et de l'association texture/type
