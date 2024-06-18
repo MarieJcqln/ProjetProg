@@ -52,6 +52,8 @@ private:
     int _width{};
     int _height{};
     double _previousTime{};
+    double _elapsedTime{};   
+    double _pauseStartTime{};
     bool _isPaused{};
     // double _elapsedTime{};
     float _viewSize{};

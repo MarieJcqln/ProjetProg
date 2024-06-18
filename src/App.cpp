@@ -19,7 +19,7 @@
 // glEnable(GL_BLEND);
 // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-App::App() : _previousTime(0.0), _viewSize(2.0)
+App::App() : _previousTime(0.0), _viewSize(2.0), _elapsedTime(0.0), _pauseStartTime(0.0), _isPaused(false)
 {
     // load what needs to be loaded here (for example textures)
     ///////////////mis dans la fonction onclick mouse
@@ -62,7 +62,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 
 void App::setup()
 {
-    // Set the clear color to a nice blue
+    //fond bleu
     glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
 
     // Setup the text renderer with blending enabled and white text color
@@ -76,7 +76,12 @@ void App::update()
 {
 
     const double currentTime{glfwGetTime()};
-    const double elapsedTime{currentTime - _previousTime};
+
+    if (!_isPaused)
+    {
+        const double elapsedTime{currentTime - _previousTime};
+        _elapsedTime += elapsedTime;
+    }
     _previousTime = currentTime;
 
     //_angle += 10.0f * elapsedTime;
@@ -87,8 +92,10 @@ void App::update()
 
 void App::render()
 {
+    _isPaused = true;
+    const double currentTime{glfwGetTime()};
     //CARRE ROUGE DERRIERE LA MAP QUI TOURNE
-    // Clear the color and depth buffers of the frame buffer
+    // on met a jour la couleur et la profoncdeur du buffer dans la frame buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -121,16 +128,19 @@ void App::render()
 
     if ((!_pauseClicked && _boutonJouerClicked))
     {
+        _isPaused = false;
         //on lance le chrono à 0
-        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
         bouton_pause();
     }
 
     if (_boutonRejouerCliked)
     {
+        _isPaused = false;
+        _elapsedTime = 0.0; //on recommence le chrono a zero
         //on lance le chrono à 0
-        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
         bouton_pause();
     }
@@ -161,14 +171,22 @@ void App::render()
         glVertex2f(0.48f, 0.49f);
         glEnd();
         glLoadIdentity();
-        time_pause = _previousTime;
-        _previousTime = 0;
+
+        if (!_isPaused)
+        {
+            _pauseStartTime = currentTime;
+            _isPaused = true;
+        }
     }
+
     if (_boutonContinuerCliked)
     {
         _uptoplay = true;
-        _previousTime += time_pause;
-        const std::string time_label_text{"Temps ecoule : " + std::to_string(_previousTime)};
+        // on ajoute la durée de la pause à _previousTime pour que elapsedtime reste fiable
+        _previousTime += (glfwGetTime() - _pauseStartTime);
+        _isPaused = false;
+
+        const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
     }
     // Without set precision
