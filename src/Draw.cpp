@@ -15,45 +15,51 @@
 #include "GLHelpers.hpp"
 
 #include <vector>
+#include <array>
 #include <unordered_map>
 
 /**
  * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
  */
 
-TileType get_tile_type_from_rgb(int r, int g, int b) {
-    if (r == 255 && g == 0 && b == 0) return TileType::Output;
-    if (r == 255 && g == 255 && b == 255) return TileType::Path;
-    if (r == 0 && g == 0 && b == 255) return TileType::Input;
-    else return TileType::Empty;
+TileType get_tile_type_from_rgb(int r, int g, int b)
+{
+  if (r == 255 && g == 0 && b == 0)
+    return TileType::Output;
+  if (r == 255 && g == 255 && b == 255)
+    return TileType::Path;
+  if (r == 0 && g == 0 && b == 255)
+    return TileType::Input;
+  else
+    return TileType::Empty;
 }
 
 std::vector<TileType> create_list_tiles(img::Image &baseMap)
 {
   std::vector<TileType> listCases;
   int mapwidth{10};
-    size_t datasize = size_t(baseMap.data_size());
-    int width = baseMap.width();
-    int height = baseMap.height();
-    int size = width * height;
-    size_t tile_size {datasize/mapwidth/mapwidth};
+  size_t datasize = size_t(baseMap.data_size());
+  int width = baseMap.width();
+  int height = baseMap.height();
+  int size = width * height;
+  size_t tile_size{datasize / mapwidth / mapwidth};
 
-    for (int i = 0; i < datasize; i+=tile_size)
-    {
-        double x = i % width;
-        double y = height - 1 - (i / width);
+  for (int i = 0; i < datasize; i += tile_size)
+  {
+    double x = i % width;
+    double y = height - 1 - (i / width);
 
-        glm::vec3 color;
-        color.r = baseMap.data()[i];
-        color.g = baseMap.data()[i + 1];
-        color.b = baseMap.data()[i + 2];
+    glm::vec3 color;
+    color.r = baseMap.data()[i];
+    color.g = baseMap.data()[i + 1];
+    color.b = baseMap.data()[i + 2];
 
-        // On vérifie si la couleur correspond à un type de case
-        std::array<float, 3> colorTab = {color.r, color.g, color.b};
+    // On vérifie si la couleur correspond à un type de case
+    std::array<float, 3> colorTab = {color.r, color.g, color.b};
 
-        listCases.push_back(get_tile_type_from_rgb(colorTab[0],colorTab[1],colorTab[2]));
-      }
-    return listCases;
+    listCases.push_back(get_tile_type_from_rgb(colorTab[0], colorTab[1], colorTab[2]));
+  }
+  return listCases;
 }
 
 //dessiner quadrillage
