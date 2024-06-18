@@ -31,19 +31,22 @@ TileType get_tile_type_from_rgb(int r, int g, int b) {
 std::vector<TileType> create_list_tiles(img::Image &baseMap)
 {
   std::vector<TileType> listCases;
+  int mapwidth{10};
+    size_t datasize = size_t(baseMap.data_size());
     int width = baseMap.width();
     int height = baseMap.height();
     int size = width * height;
+    size_t tile_size {datasize/mapwidth/mapwidth};
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < datasize; i+=tile_size)
     {
         double x = i % width;
         double y = height - 1 - (i / width);
 
         glm::vec3 color;
-        color.r = baseMap.data()[i * 3];
-        color.g = baseMap.data()[i * 3 + 1];
-        color.b = baseMap.data()[i * 3 + 2];
+        color.r = baseMap.data()[i];
+        color.g = baseMap.data()[i + 1];
+        color.b = baseMap.data()[i + 2];
 
         // On vérifie si la couleur correspond à un type de case
         std::array<float, 3> colorTab = {color.r, color.g, color.b};
