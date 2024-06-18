@@ -138,7 +138,6 @@ void App::render()
     if (_boutonRejouerCliked)
     {
         _isPaused = false;
-        _elapsedTime = 0.0; //on recommence le chrono a zero
         //on lance le chrono à 0
         const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
@@ -151,7 +150,7 @@ void App::render()
     {
         pause_menu();
         //pour transformer le bouton pause en croix
-        glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+        glColor4f(0.9f, 0.9f, 0.9f, 0.5f);
         glRotatef(45, 0., 0., 1.);
         glTranslatef(0.19f, -0.45f, 0.0f);
         glBegin(GL_QUADS);
@@ -161,7 +160,6 @@ void App::render()
         glVertex2f(0.4f, 0.49f);
         glEnd();
         glLoadIdentity();
-        // glColor4f(1.0f, 0.8f, 0.2f, 0.5f);
         glRotatef(-45, 0., 0., 1.);
         glTranslatef(-0.45f, 0.17f, 0.0f);
         glBegin(GL_QUADS);
@@ -220,7 +218,7 @@ void App::bouton_jouer()
 void App::bouton_rejouer()
 {
     // render exemple quad
-    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+    glColor4f(0.0f, 0.0f, 1.0f, 0.5f);
     glBegin(GL_QUADS);
     glVertex2f(-0.3f, -0.0f);
     glVertex2f(0.3f, -0.0f);
@@ -234,6 +232,7 @@ void App::bouton_continuer()
 {
     // render exemple quad
     glColor4f(0.0f, 0.0f, 1.0f, 0.5f);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
     glBegin(GL_QUADS);
     glVertex2f(-0.3f, -0.25f);
     glVertex2f(0.3f, -0.25f);
@@ -265,8 +264,8 @@ void App::bouton_pause()
 void App::pause_menu()
 {
     _uptoplay = false;
-    glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent
-    glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
+    glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent pour voir la map par transparence
+    glColor4f(0.7f, 0.5f, 0.0f, 0.0f);
     glBegin(GL_QUADS);
     glVertex2f(-0.5f, -0.5f);
     glVertex2f(0.5f, -0.5f);
@@ -291,19 +290,30 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
 ////// FIN CODE AJOUTE 3)2///////
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
+    //QUITTER
     if (key == GLFW_KEY_A && action == GLFW_PRESS)
     { //on met A car en querty A=Q
 
         // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
         glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne
     }
+    //PAUSE
     if (key == GLFW_KEY_P && action == GLFW_PRESS)
     { //on met A car en querty A=Q
 
         // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
         _pauseClicked = true;
     }
-    //SI P => pause
+    //REJOUER
+    if (key == GLFW_KEY_R && action == GLFW_PRESS)
+    {
+        _currentTexture = _texture;
+        _pauseClicked = false;
+        _elapsedTime = 0.0; //on recommence le chrono a zero
+        _boutonRejouerCliked = true;
+        _uptoplay = true;
+        render();
+    }
     //SI fleche du haut : aller en haut
     //SI fleche du bas : aller en bas
     //SI fleche de droite : aller en droite
@@ -337,14 +347,26 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
     //cursor_position_callback
     if (xpos <= 0.5f && xpos >= 0.4 && ypos <= 0.5f && ypos >= 0.4) // && xpos == 1.0 && ypos == 0.0) //si appuye sur bouton pause
     {
-        _pauseClicked = true;
+        if (_pauseClicked) //si on clic sur la croix dans le menu pause
+        {
+            _currentTexture = _texture;
+            _pauseClicked = false;
+            _boutonJouerClicked = true;
+            _uptoplay = true;
+            render();
+        }
+        else
+        {
+            _pauseClicked = true;
+        }
         // if (xpos <= 0.5f && xpos >= 0.4 && ypos <= 0.5f && ypos >= 0.4) // pour fermer le menu pause
         // {
         //     _pauseClicked = false;
         // }
     }
 
-    if (xpos <= 0.3f && xpos >= -0.3f && ypos <= -0.15f && ypos >= -0.25f)
+    //JOUER
+    else if (xpos <= 0.3f && xpos >= -0.3f && ypos <= -0.15f && ypos >= -0.25f)
     {
         _currentTexture = _texture;
         _pauseClicked = false;
@@ -352,13 +374,14 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
         _uptoplay = true;
         render();
     }
-
-    else if (xpos <= 0.3f && xpos >= -0.3f && ypos <= 0.00f && ypos >= -0.10f) //si clique sur rejouer
+    //REJOUER
+    else if (xpos <= 0.3f && xpos >= -0.3f && ypos <= 10.0f && ypos >= 0.0f) //si clique sur rejouer
     {
-        _uptoplay = true;
         _currentTexture = _texture;
-        _boutonRejouerCliked = true;
         _pauseClicked = false;
+        _elapsedTime = 0.0; //on recommence le chrono a zero
+        _boutonRejouerCliked = true;
+        _uptoplay = true;
         render();
     }
 }
