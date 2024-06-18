@@ -102,6 +102,19 @@ target_link_libraries(${PROJECT_NAME} PUBLIC glad)
 #############################################"""""""""""""###########"
 #############################################################"
 
+if(APPLE)
+    message(STATUS "Building on macOS")
+    add_definitions(-DIS_MACOS)
+elseif(UNIX AND NOT APPLE)
+    message(STATUS "Building on Linux")
+    add_definitions(-DIS_LINUX)
+elseif(WIN32)
+    message(STATUS "Building on Windows")
+    add_definitions(-DIS_WINDOWS)
+else()
+    message(FATAL_ERROR "Unsupported platform")
+endif()
+
 
 ## ---glm---
 FetchContent_Declare(
