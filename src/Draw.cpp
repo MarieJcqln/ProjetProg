@@ -52,9 +52,8 @@ std::vector<TileType> create_list_tiles(img::Image &baseMap)
         std::array<float, 3> colorTab = {color.r, color.g, color.b};
 
         listCases.push_back(get_tile_type_from_rgb(colorTab[0],colorTab[1],colorTab[2]));
-
+      }
     return listCases;
-}
 }
 
 //dessiner quadrillage
