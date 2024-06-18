@@ -20,39 +20,13 @@
 /**
  * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
  */
-/* std::vector<TileType> create_list_tiles(uint8_t *map_reference, size_t size)
-{
-  int mapwidth{10};
-  std::vector<TileType> tile_list{};
-  //unsigned int tile_id {0};
-  size_t tile_size{size / mapwidth / mapwidth};
 
-  for (size_t i{0}; i < size; i += tile_size)
-  {
-    //float x {-0.5f + i/tile_size%mapwidth * 0.1f};
-    //float y {-0.5f + i/tile_size/mapwidth * 0.1f};
-
-    if (map_reference[i] == 0 && map_reference[i + 1] == 0 && map_reference[i + 2] == 0)
-    {
-      tile_list.push_back(TileType::Empty);
-    }
-    else if (map_reference[i] == 1 && map_reference[i + 1] == 0 && map_reference[i + 2] == 0)
-    {
-      tile_list.push_back(TileType::Input);
-    }
-    else if (map_reference[i] == 0 && map_reference[i + 1] == 0 && map_reference[i + 2] == 1)
-    {
-      tile_list.push_back(TileType::Output);
-    }
-    else if (map_reference[i] == 1 && map_reference[i + 1] == 1 && map_reference[i + 2] == 1)
-    {
-      tile_list.push_back(TileType::Path);
-    }
-    //tile_id++;
-  }
-  //std::cout<<"Tile list:"<<tile_list<<std::endl;
-  return tile_list;
-} */
+TileType get_tile_type_from_rgb(int r, int g, int b) {
+    if (r == 255 && g == 0 && b == 0) return TileType::Input;
+    if (r == 255 && g == 255 && b == 255) return TileType::Path;
+    if (r == 0 && g == 0 && b == 255) return TileType::Output;
+    else return TileType::Empty;
+}
 
 std::vector<TileType> create_list_tiles(img::Image &baseMap)
 {
@@ -73,46 +47,12 @@ std::vector<TileType> create_list_tiles(img::Image &baseMap)
 
         // On vérifie si la couleur correspond à un type de case
         std::array<float, 3> colorTab = {color.r, color.g, color.b};
-        bool found = false;
-        std::array<float, 3> red = {255.0, 0.0, 0.0};
-        std::array<float, 3> blue = {0.0, 0.0, 255.0};
-        std::array<float, 3> white ={255.0, 255.0, 255.0};
-        std::array<float, 3> black ={0.0, 0.0, 0.0};
- 
-        for (unsigned long j = 0; j < 4; j++)
-        {
-            if (colorTab == white ) // si la couleur correspond au blanc
-            {
-                listCases.push_back(TileType::Path);
-                found = true;
-                break;
-            }
-            if (colorTab == red ) // si la couleur correspond au rouge
-            {
-                listCases.push_back(TileType::Input);
-                found = true;
-                break;
-            }
-            if (colorTab == blue ) // si la couleur correspond au bleu
-            {
-                listCases.push_back(TileType::Output);
-                found = true;
-                break;
-            }
-            if (colorTab == black ) // si la couleur correspond au noir
-            {
-                listCases.push_back(TileType::Empty);
-                found = true;
-                break;
-            }
-        }
-        if (!found) // si la couleur ne correspond à aucun type de case
-        {
-            listCases.push_back(TileType::Empty);
-        } 
-    }
+
+        listCases.push_back(get_tile_type_from_rgb(colorTab[0],colorTab[1],colorTab[2]));
+
     return listCases;
-} 
+}
+}
 
 //dessiner quadrillage
 //Grâce à la liste des types de cases de l'image et de l'association texture/type
@@ -127,18 +67,6 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
   {
     for (float w = -0.5f; w < 0.4f; w += 0.1f)
     {
-      glBegin(GL_QUADS);
-      glTexCoord2d(0, 0);
-      glVertex2f(w, h);
-      glTexCoord2d(1, 0);
-      glVertex2f(w + 0.1f, h);
-      glTexCoord2d(1, 1);
-      glVertex2f(w + 0.1f, h + 0.1f);
-      glTexCoord2d(0, 1);
-      glVertex2f(w, h + 0.1f);
-      glEnd();
-      //std::cout<<"liste[i]:"<<char(liste[i])<<std::endl;
-
       if (liste[i] == TileType::Empty)
       {
         draw_quad_with_texture(tile_texture_mapping[TileType::Empty], w, h, taille);
@@ -155,6 +83,7 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
       {
         draw_quad_with_texture(tile_texture_mapping[TileType::Path], w, h, taille);
       }
+      i++;
     }
   }
 }
