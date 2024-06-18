@@ -125,7 +125,7 @@ void App::render()
 
     if (_uptoplay)
     {
-        glClearColor(0.0, 0.0, 1.0, 0.5);
+        glClearColor(0.0, 0.0, 0.8, 0.5);
         quadrillage(_liste, _tile_texture_mapping);
     }
 
@@ -153,7 +153,7 @@ void App::render()
     {
         pause_menu();
         //pour transformer le bouton pause en croix
-        glColor4f(0.9f, 0.9f, 0.9f, 0.5f);
+        glColor4f(0.9f, 0.9f, 0.9f, 0.9f);
         glRotatef(45, 0., 0., 1.);
         glTranslatef(0.19f, -0.45f, 0.0f);
         glBegin(GL_QUADS);
@@ -190,18 +190,6 @@ void App::render()
         const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
     }
-    // Without set precision
-    // const std::string angle_label_text{"Angle: " + std::to_string(_angle)};
-    // With c++20 you can use std::format
-    // const std::string angle_label_text { std::format("Angle: {:.2f}", _angle) };
-
-    // Using stringstream to format the string with fixed precision
-    // std::string angle_label_text{};
-    // std::stringstream stream{};
-    // stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
-    // angle_label_text = stream.str();
-
-    // TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
     TextRenderer.Render();
 }
@@ -267,8 +255,8 @@ void App::bouton_pause()
 void App::pause_menu()
 {
     _uptoplay = false;
-    glClearColor(0.0, 0.0, 0.0, 0.5); // on ajoute un filtre noir transparent pour voir la map par transparence
-    glColor4f(0.7f, 0.5f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.8f, 0.5f); // on ajoute un filtre noir transparent pour voir la map par transparence
+    glColor4f(0.0f, 0.0f, 0.4f, 0.0f);
     glBegin(GL_QUADS);
     glVertex2f(-0.5f, -0.5f);
     glVertex2f(0.5f, -0.5f);
@@ -282,27 +270,23 @@ void App::pause_menu()
 
 static const float GL_VIEW_SIZE = 2.0f;
 
-void App::conversion(double &xpos, double &ypos)
+void App::conversion(double &xpos, double &ypos) //conversion de la taille de l'ecran
 {
     xpos = ((xpos - (_width / 2)) * GL_VIEW_SIZE / _height);
     ypos = -((ypos - (_height / 2)) * GL_VIEW_SIZE / _height);
 }
 
-///// CODE AJOUTE 3)2)//////
 void App::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
-////// FIN CODE AJOUTE 3)2///////
 {
     // std::cout << key << std::endl; //pour voir si on capte bien que je touche une touche
     //QUITTER
-    if (key == GLFW_KEY_A && action == GLFW_PRESS)
-    { //on met A car en querty A=Q
-
-        // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
+    if (key == GLFW_KEY_A && action == GLFW_PRESS) //on met A car en querty A=Q
+    {
         glfwSetWindowShouldClose(window, GLFW_TRUE); //GLFW_TRUE ou 1 fonctionne
     }
     //PAUSE
     if (key == GLFW_KEY_P && action == GLFW_PRESS)
-    { //on met A car en querty A=Q
+    {
 
         // void glfwSetWindowShouldClose(GLFWwindow * window, int value);
         _pauseClicked = true;
@@ -338,9 +322,6 @@ void App::mouse_button_callback(GLFWwindow *window, int button, int action, int 
     }
 }
 
-//FROM TD1 ex3
-// void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-// {}
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 {
 }
@@ -362,10 +343,6 @@ void App::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
         {
             _pauseClicked = true;
         }
-        // if (xpos <= 0.5f && xpos >= 0.4 && ypos <= 0.5f && ypos >= 0.4) // pour fermer le menu pause
-        // {
-        //     _pauseClicked = false;
-        // }
     }
 
     //JOUER
