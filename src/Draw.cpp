@@ -22,9 +22,9 @@
  */
 
 TileType get_tile_type_from_rgb(int r, int g, int b) {
-    if (r == 255 && g == 0 && b == 0) return TileType::Input;
+    if (r == 255 && g == 0 && b == 0) return TileType::Output;
     if (r == 255 && g == 255 && b == 255) return TileType::Path;
-    if (r == 0 && g == 0 && b == 255) return TileType::Output;
+    if (r == 0 && g == 0 && b == 255) return TileType::Input;
     else return TileType::Empty;
 }
 
