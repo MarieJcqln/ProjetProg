@@ -34,17 +34,12 @@ App::App() : _previousTime(0.0), _viewSize(2.0), _elapsedTime(0.0), _pauseStartT
     img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
     img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
 
-    std::cout<<"Map data : "<<map.data()[1]<<std::endl;
-
-    //_liste = create_list_tiles(map.data(), map.data_size());
-    _liste = create_list_tiles(map);
+    //std::cout<<"Map data : "<<map.data()[1]<<std::endl;
 
     // _texture = loadTexture(test);
     //////////////////////////////
     // Création de la liste de case
-
-    // std::vector<TileType> list_tiles = create_list_tiles(map.data(), map.data_size());
-
+    _liste = create_list_tiles(map);
     //load charge à partir de en haut à gauche
     //MAP
     _texture = loadTexture(map);
@@ -315,9 +310,6 @@ void App::mouse_button_callback(GLFWwindow *window, int button, int action, int 
         //getting cursor position
         glfwGetCursorPos(window, &xpos, &ypos);
         conversion(xpos, ypos);
-        std::cout << "Cursor Position at (" << _height << ")" << std::endl;
-        std::cout << "Cursor Position at (" << _width << ")" << std::endl;
-        std::cout << "Cursor Position at (" << xpos << " : " << ypos << ")" << std::endl;
         cursor_position_callback(window, xpos, ypos);
     }
 }
