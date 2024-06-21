@@ -117,12 +117,14 @@ void App::render()
     if (_OSType == "MAC")
     {
         TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_128);
+        TextRenderer.Label("SHARK'ATTACK", _width , _height/4, SimpleText::CENTER);
     }
     else
     {
         TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+        TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 4, SimpleText::CENTER);
     }
-    TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 4, SimpleText::CENTER);
+    
 
     if (!_boutonJouerClicked) //tant que bouton jouer pas cliquer on l'affiche
     {                         // Dessiner le bouton seulement si pas cliqué
@@ -181,13 +183,13 @@ void App::render()
         {
             TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
             const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
-            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+            TextRenderer.Label(time_label_text.c_str(), _width , _height*1.8 , SimpleText::CENTER);
         }
         else
         {
             TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
             const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
-            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height-4, SimpleText::CENTER);
         }
 
         bouton_pause();
@@ -201,7 +203,7 @@ void App::render()
         {
             TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
             const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
-            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+            TextRenderer.Label(time_label_text.c_str(), _width, _height*1.2, SimpleText::CENTER);
         }
         else
         {
@@ -270,8 +272,17 @@ void App::bouton_jouer()
     glVertex2f(0.3f, -0.15f);
     glVertex2f(-0.3f, -0.15f);
     glEnd();
-    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-    TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+    if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            TextRenderer.Label("JOUER", _width, _height*1.25, SimpleText::CENTER);
+        }
+        else
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+        }
+    
 }
 void App::bouton_rejouer()
 {
@@ -283,8 +294,18 @@ void App::bouton_rejouer()
     glVertex2f(0.3f, 0.10f);
     glVertex2f(-0.3f, 0.10f);
     glEnd();
-    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-    TextRenderer.Label("REJOUER", _width / 2, 3.0 * _height / 6, SimpleText::CENTER);
+
+    if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            TextRenderer.Label("REJOUER", _width, _height, SimpleText::CENTER);
+        }
+        else
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            TextRenderer.Label("REJOUER", _width / 2, 3.0 * _height / 6, SimpleText::CENTER);
+        }
+    
 }
 
 void App::bouton_continuer()
@@ -298,8 +319,17 @@ void App::bouton_continuer()
     glVertex2f(0.3f, -0.15f);
     glVertex2f(-0.3f, -0.15f);
     glEnd();
-    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-    TextRenderer.Label("CONTINUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+
+    if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            TextRenderer.Label("CONTINUER", _width, _height*1.25, SimpleText::CENTER);
+        }
+        else
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            TextRenderer.Label("CONTINUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
+        }
 }
 
 void App::bouton_pause()
@@ -332,8 +362,17 @@ void App::pause_menu()
     glVertex2f(0.5f, 0.5f);
     glVertex2f(-0.5f, 0.5f);
     glEnd();
-    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-    TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 2.3 * _height / 6, SimpleText::CENTER);
+    if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            TextRenderer.Label("PARTIE EN PAUSE", _width, _height/1.5, SimpleText::CENTER);
+        }
+        else
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 2.3 * _height / 6, SimpleText::CENTER);
+        }
+    
     bouton_rejouer();
     bouton_continuer();
 }
