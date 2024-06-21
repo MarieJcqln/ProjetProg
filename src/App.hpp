@@ -47,6 +47,8 @@ public:
     GLuint _textureoutput{};
     GLuint _texturetour{};
 
+    std::string _OSType;
+
 private:
     void render();
 

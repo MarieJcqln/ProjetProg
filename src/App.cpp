@@ -114,7 +114,14 @@ void App::render()
     glScalef(1.0f, 1.0f, 1.0f);
     draw_quad_with_texture(_currentTexture, -0.5f, -0.5f, 1.0f);
     glPopMatrix();
-    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+    if (_OSType == "MAC")
+    {
+        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_128);
+    }
+    else
+    {
+        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+    }
     TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 4, SimpleText::CENTER);
 
     if (!_boutonJouerClicked) //tant que bouton jouer pas cliquer on l'affiche
@@ -169,9 +176,20 @@ void App::render()
     {
         _isPaused = false;
         //on lance le chrono à 0
-        const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
-        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-        TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+
+        if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        }
+        else
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        }
+
         bouton_pause();
     }
 
@@ -179,9 +197,18 @@ void App::render()
     {
         _isPaused = false;
         //on lance le chrono à 0
-        const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
-        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
-        TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        if (_OSType == "MAC")
+        {
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+            const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        }
+        else
+        {
+            const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+            TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
+            TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+        }
         bouton_pause();
     }
 

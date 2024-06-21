@@ -27,6 +27,19 @@ constexpr double TARGET_TIME_FOR_FRAME{1.0 / 60.0};
 
 int main()
 {
+    //pour connaitre le type d'OS
+    std::string _OSType2;
+
+#ifdef IS_MACOS
+    _OSType2 = "MAC";
+#elif IS_LINUX
+    _OSType2 = "LINUX";
+#elif IS_WINDOWS
+    _OSType2 = "WINDOWS";
+#else
+    _OSType2 = "UNKNOWN";
+#endif
+
     // Set an error callback to display glfw errors
     glfwSetErrorCallback([](int error, const char *description)
                          { std::cerr << "Error " << error << ": " << description << std::endl; });
@@ -68,6 +81,8 @@ int main()
     }
 
     App app{};
+
+    app._OSType = _OSType2; //pour donner a la variable dans app.hpp le type d'OS
 
     glfwSetWindowUserPointer(window, &app);
 
