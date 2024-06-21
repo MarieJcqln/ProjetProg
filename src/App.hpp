@@ -45,6 +45,7 @@ public:
     GLuint _texturepath{};
     GLuint _textureinput{};
     GLuint _textureoutput{};
+    GLuint _texturetour{};
 
 private:
     void render();
@@ -52,14 +53,14 @@ private:
     int _width{};
     int _height{};
     double _previousTime{};
-    double _elapsedTime{};   
+    double _elapsedTime{};
     double _pauseStartTime{};
     bool _isPaused{};
     // double _elapsedTime{};
     float _viewSize{};
 
     // Add your variables here
-    GLuint _texture{};
+    GLuint _texture{}; //Mzp
     GLuint _texturecover{};
     GLuint _currentTexture{};
     float _angle{};

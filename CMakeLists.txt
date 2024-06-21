@@ -114,6 +114,18 @@ target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
 #############################################"""""""""""""###########"
 #############################################################"
 
+
+# # Trouver le package SFML
+# find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+# # Ajouter les fichiers sources
+# add_executable(MySFMLProject main.cpp)
+
+# # Lier les bibliothèques SFML
+# target_link_libraries(MySFMLProject sfml-graphics sfml-window sfml-system)
+
+
+
 if(APPLE)
     message(STATUS "Building on macOS")
     add_definitions(-DIS_MACOS)

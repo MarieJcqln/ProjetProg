@@ -95,3 +95,35 @@ void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLui
     }
   }
 }
+
+// void quadrillage(std::vector<TileType> &liste, std::unordered_map<TileType, GLuint> &tile_texture_mapping)
+// {
+//   //boucler sur l'image
+//   //mettre bonne texture sur chaque quad
+//   int i{0};
+//   float taille{0.1f};
+//   glColor3f(0.0f, 0.0f, 0.0f);
+//   for (float h = -0.5f; h < 0.4f; h += 0.1f)
+//   {
+//     for (float w = -0.5f; w < 0.4f; w += 0.1f)
+//     {
+//       if (liste[i] == TileType::Empty)
+//       {
+//         draw_quad_with_texture(tile_texture_mapping[TileType::Empty], w, h, taille);
+//       }
+//       else if (liste[i] == TileType::Input)
+//       {
+//         draw_quad_with_texture(tile_texture_mapping[TileType::Input], w, h, taille);
+//       }
+//       else if (liste[i] == TileType::Output)
+//       {
+//         draw_quad_with_texture(tile_texture_mapping[TileType::Output], w, h, taille);
+//       }
+//       else if (liste[i] == TileType::Path)
+//       {
+//         draw_quad_with_texture(tile_texture_mapping[TileType::Path], w, h, taille);
+//       }
+//       i++;
+//     }
+//   }
+// }

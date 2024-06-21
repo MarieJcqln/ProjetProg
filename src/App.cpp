@@ -13,6 +13,8 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
+// #include <SFML/Graphics.hpp> //pour mettre l'image ou on veut dans la fenetre (sprite)
+
 //pour utiliser la couche alpha
 // #include <GL/glut.h>
 
@@ -34,6 +36,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0), _elapsedTime(0.0), _pauseStartT
     img::Image input{img::load(make_absolute_path("images/bouee_pixel.png", true), 3, true)};
     img::Image output{img::load(make_absolute_path("images/nageuse_arrivee.png", true), 3, true)};
 
+    img::Image tour{img::load(make_absolute_path("images/phare_pixel.png", true), 3, true)};
+
     //std::cout<<"Map data : "<<map.data()[1]<<std::endl;
 
     // _texture = loadTexture(test);
@@ -47,6 +51,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0), _elapsedTime(0.0), _pauseStartT
     _texturepath = loadTexture(path);
     _textureinput = loadTexture(input);
     _textureoutput = loadTexture(output);
+    _texturetour = loadTexture(tour);
 
     _tile_texture_mapping.insert({TileType::Path, _texturepath});
     _tile_texture_mapping.insert({TileType::Input, _textureinput});
@@ -109,8 +114,8 @@ void App::render()
     glScalef(1.0f, 1.0f, 1.0f);
     draw_quad_with_texture(_currentTexture, -0.5f, -0.5f, 1.0f);
     glPopMatrix();
-
-    TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 3, SimpleText::CENTER);
+    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_64);
+    TextRenderer.Label("SHARK'ATTACK", _width / 2, _height / 4, SimpleText::CENTER);
 
     if (!_boutonJouerClicked) //tant que bouton jouer pas cliquer on l'affiche
     {                         // Dessiner le bouton seulement si pas cliqué
@@ -118,10 +123,46 @@ void App::render()
         bouton_jouer();
     }
 
+    // sf::RenderWindow window(sf::VideoMode(800, 600), "Positionner une image");
+
+    // // Charger l'image depuis un fichier
+    // if (!_texturetour.loadFromFile("images/phare_pixel.png"))
+    // {
+    //     // Gestion de l'erreur de chargement
+    //     return -1;
+    // }
+
+    // // Créer un sprite à partir de la texture
+    // sf::Sprite sprite;
+    // sprite.setTexture(_texturetour);
+
+    // // Définir la position du sprite à gauche de la fenêtre
+    // sprite.setPosition(0.f, 0.f);
+
+    // // Boucle principale
+    // while (window.isOpen())
+    // {
+    //     sf::Event event;
+    //     while (window.pollEvent(event))
+    //     {
+    //         if (event.type == sf::Event::Closed)
+    //             window.close();
+    //     }
+    //     window.clear();
+    //     if (_uptoplay)
+    //     {
+    //         glClearColor(0.0, 0.0, 0.8, 0.5);
+    //         quadrillage(_liste, _tile_texture_mapping);
+    //         // Créer un sprite à partir de la texture
+    //         window.draw(sprite);
+    //     }
+    //     window.display();
+    // }
     if (_uptoplay)
     {
         glClearColor(0.0, 0.0, 0.8, 0.5);
         quadrillage(_liste, _tile_texture_mapping);
+        // Créer un sprite à partir de la texture
     }
 
     if ((!_pauseClicked && _boutonJouerClicked))
@@ -129,6 +170,7 @@ void App::render()
         _isPaused = false;
         //on lance le chrono à 0
         const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
         bouton_pause();
     }
@@ -138,6 +180,7 @@ void App::render()
         _isPaused = false;
         //on lance le chrono à 0
         const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
         bouton_pause();
     }
@@ -183,6 +226,7 @@ void App::render()
         _isPaused = false;
 
         const std::string time_label_text{"Temps ecoule : " + std::to_string(_elapsedTime)};
+        TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
         TextRenderer.Label(time_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
     }
 
@@ -199,6 +243,7 @@ void App::bouton_jouer()
     glVertex2f(0.3f, -0.15f);
     glVertex2f(-0.3f, -0.15f);
     glEnd();
+    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
     TextRenderer.Label("JOUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
 }
 void App::bouton_rejouer()
@@ -211,6 +256,7 @@ void App::bouton_rejouer()
     glVertex2f(0.3f, 0.10f);
     glVertex2f(-0.3f, 0.10f);
     glEnd();
+    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
     TextRenderer.Label("REJOUER", _width / 2, 3.0 * _height / 6, SimpleText::CENTER);
 }
 
@@ -225,6 +271,7 @@ void App::bouton_continuer()
     glVertex2f(0.3f, -0.15f);
     glVertex2f(-0.3f, -0.15f);
     glEnd();
+    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
     TextRenderer.Label("CONTINUER", _width / 2, 3.7 * _height / 6, SimpleText::CENTER);
 }
 
@@ -258,6 +305,7 @@ void App::pause_menu()
     glVertex2f(0.5f, 0.5f);
     glVertex2f(-0.5f, 0.5f);
     glEnd();
+    TextRenderer.SetTextSize(SimpleText::FontSize::SIZE_32);
     TextRenderer.Label("PARTIE EN PAUSE", _width / 2, 2.3 * _height / 6, SimpleText::CENTER);
     bouton_rejouer();
     bouton_continuer();
